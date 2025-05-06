@@ -1,0 +1,41 @@
+# Undertow settings
+server:
+  port: ${SERVER_PORT:8080}
+  undertow:
+    threads:
+      io: ${UNDERTOW_IO_THREADS:1}
+      worker: ${UNDERTOW_WORKER_THREADS:8}
+    buffer-size: ${UNDERTOW_BUFFER_SIZE:1024}
+
+# Logging settings
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        web: ERROR
+        security: INFO
+        boot: INFO
+      hibernate: INFO
+    com:
+      sample: DEBUG
+  file:
+    path: ${LOGGING_FILE_PATH:./}
+    name: output.log
+  logback:
+    rollingpolicy:
+      max-file-size: ${LOGGING_FILE_MAX_SIZE:300MB}
+      max-history: ${LOGGING_FILE_MAX_HISTORY:3}
+
+# Spring settings
+spring:
+  profiles:
+    active: dev
+  application:
+    name: spring-ai-api-client
+
+# DeepSeek settings
+deepseek:
+  base-url: https://api.siliconflow.com/v1
+  model: deepseek-ai/DeepSeek-R1
+  api-key: your-api-key

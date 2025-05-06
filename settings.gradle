@@ -1,0 +1,14 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        maven { url "https://maven.aliyun.com/repository/spring-plugin" }
+        // https://plugins.gradle.org/m2/
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = "spring-ai-achieve"
+
+include "spring-ai-api-client"
+//include "spring-ai-dify-client"
+//include "spring-ai-mcp-server"

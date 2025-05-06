@@ -1,0 +1,4 @@
+dependencies {
+//    implementation "io.github.pig-mesh.ai:deepseek-spring-boot-starter"
+    implementation "org.springframework.ai:spring-ai-openai"
+}

@@ -2,7 +2,7 @@ plugins {
     id "java"
     id "io.freefair.lombok" version "8.13.1" apply false
     id "io.spring.dependency-management" version "1.1.7" apply false
-    id "org.springframework.boot" version "3.4.5" apply false
+    id "org.springframework.boot" version "3.2.12" apply false
 }
 
 allprojects {
@@ -12,8 +12,8 @@ allprojects {
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
         springCloudVersion = "2023.0.5"
-        springCloudAlibabaVersion = "2023.0.3.2"
-        springAiVersion= "1.0.0-M8"
+        springCloudAlibabaVersion = "2022.0.0.2"
+//        springAiVersion= "1.0.0-M8"
         knife4jVersion = "4.5.0"
     }
 
@@ -44,6 +44,7 @@ subprojects {
         imports {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
             mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:$springCloudAlibabaVersion"
+//            mavenBom "org.springframework.ai:spring-ai-bom:$springAiVersion"
             mavenBom "com.github.xiaoymin:knife4j-dependencies:$knife4jVersion"
         }
 
@@ -57,6 +58,7 @@ subprojects {
             dependency "org.apache.commons:commons-lang3:3.17.0"
             dependency "org.apache.commons:commons-collections4:4.5"
 
+            dependency  "org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-M6"
             dependency "io.github.pig-mesh.ai:deepseek-spring-boot-starter:1.4.7"
         }
     }

@@ -33,9 +33,11 @@ spring:
     active: dev
   application:
     name: spring-ai-api-client
-
-# DeepSeek settings
-deepseek:
-  base-url: https://api.siliconflow.com/v1
-  model: deepseek-ai/DeepSeek-R1
-  api-key: your-api-key
+  ai:
+    openai:
+      base-url: your-base-url
+      api-key: your-api-key
+      chat:
+        options:
+          model: "Qwen/Qwen2.5-7B-Instruct"
+          temperature: 0.5

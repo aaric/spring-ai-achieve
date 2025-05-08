@@ -1,5 +1,6 @@
 apply plugin: "org.springframework.boot"
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter"
+//    implementation "org.springframework.ai:spring-ai-starter-mcp-server"
+    implementation "org.springframework.ai:spring-ai-starter-mcp-server-webmvc"
 }

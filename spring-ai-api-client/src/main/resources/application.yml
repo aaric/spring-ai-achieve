@@ -16,6 +16,7 @@ logging:
         web: ERROR
         security: INFO
         boot: INFO
+        ai: INFO
       hibernate: INFO
     com:
       github: DEBUG

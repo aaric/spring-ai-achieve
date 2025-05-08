@@ -33,6 +33,8 @@ subprojects {
     targetCompatibility = JavaVersion.VERSION_17
 
     dependencies {
+//        implementation platform("org.springframework.ai:spring-ai-bom:$springAiVersion")
+
         implementation "org.slf4j:slf4j-api"
 
         testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -44,7 +46,6 @@ subprojects {
         imports {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
             mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:$springCloudAlibabaVersion"
-//            mavenBom "org.springframework.ai:spring-ai-bom:$springAiVersion"
             mavenBom "com.github.xiaoymin:knife4j-dependencies:$knife4jVersion"
         }
 

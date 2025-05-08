@@ -24,7 +24,8 @@ public class OpenAiApiTests {
     private final ChatClient chatClient;
 
     @Test
-    public void testBeanExist() {
-        System.err.println(chatClient.prompt().user("你是谁？").call().content());
+    public void testPromptText() {
+//        System.err.println(chatClient.prompt().user("我在武汉，今天天气咋样？").call().content());
+        System.err.println(chatClient.prompt().user("今天武汉下雨，请给出我的岀行建议？").call().content());
     }
 }

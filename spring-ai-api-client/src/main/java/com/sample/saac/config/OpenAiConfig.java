@@ -16,7 +16,7 @@ public class OpenAiConfig {
     @Bean
     ChatClient chatClient(ChatClient.Builder builder) {
         return builder.defaultSystem("""
-                你是一个车联网协议工程师，能针对用户提出的问题，给出合理化的建议
+                你是一个气象专家，能根据用户当地天气情况，给出合理化建议。
                 """).build();
     }
 }

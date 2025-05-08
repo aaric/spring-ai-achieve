@@ -16,6 +16,7 @@ logging:
         web: ERROR
         security: INFO
         boot: INFO
+        ai: INFO
       hibernate: INFO
     com:
       github: DEBUG
@@ -33,3 +34,8 @@ spring:
     active: dev
   application:
     name: spring-ai-mcp-server
+  ai:
+    mcp:
+      server:
+        name: spring-ai-mcp-server
+        sse-message-endpoint: /mcp/message

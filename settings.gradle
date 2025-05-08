@@ -11,4 +11,5 @@ rootProject.name = "spring-ai-achieve"
 
 include "spring-ai-api-client"
 include "spring-ai-mcp-server"
+//include "spring-ai-mcp-client"
 //include "spring-ai-dify-client"

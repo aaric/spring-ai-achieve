@@ -1,4 +1,4 @@
-package com.sample.saac.config;
+package com.github.aaric.saac.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.context.annotation.Bean;

@@ -25,7 +25,7 @@ public class OpenAiApiTests {
 
     @Test
     public void testPromptText() {
-//        System.err.println(chatClient.prompt().user("我在武汉，今天天气咋样？").call().content());
-        System.err.println(chatClient.prompt().user("今天武汉下雨，请给出我的岀行建议？").call().content());
+//        System.err.println(chatClient.prompt().user("今天武汉天气咋样？").call().content());
+        System.err.println(chatClient.prompt().user("今天武汉下雨，请给岀行建议？").call().content());
     }
 }

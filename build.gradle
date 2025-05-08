@@ -7,13 +7,13 @@ plugins {
 
 allprojects {
     group = "com.sample"
-    version = "0.12.2-SNAPSHOT"
+    version = "0.1.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
         springCloudVersion = "2023.0.5"
         springCloudAlibabaVersion = "2022.0.0.2"
-//        springAiVersion= "1.0.0-M8"
+        springAiVersion= "1.0.0-M8"
         knife4jVersion = "4.5.0"
     }
 
@@ -33,7 +33,7 @@ subprojects {
     targetCompatibility = JavaVersion.VERSION_17
 
     dependencies {
-//        implementation platform("org.springframework.ai:spring-ai-bom:$springAiVersion")
+        implementation platform("org.springframework.ai:spring-ai-bom:$springAiVersion")
 
         implementation "org.slf4j:slf4j-api"
 
@@ -59,7 +59,6 @@ subprojects {
             dependency "org.apache.commons:commons-lang3:3.17.0"
             dependency "org.apache.commons:commons-collections4:4.5"
 
-            dependency  "org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-M6"
             dependency "io.github.pig-mesh.ai:deepseek-spring-boot-starter:1.4.7"
         }
     }

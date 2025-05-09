@@ -7,7 +7,7 @@ plugins {
 
 allprojects {
     group = "com.sample"
-    version = "0.3.0-SNAPSHOT"
+    version = "0.4.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
@@ -36,6 +36,7 @@ subprojects {
         implementation platform("org.springframework.ai:spring-ai-bom:$springAiVersion")
 
         implementation "org.slf4j:slf4j-api"
+        implementation "org.apache.commons:commons-lang3"
 
         testImplementation("org.springframework.boot:spring-boot-starter-test") {
             exclude group: "org.junit.vintage", module: "junit-vintage-engine"

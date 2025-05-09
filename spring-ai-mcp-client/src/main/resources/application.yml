@@ -42,3 +42,12 @@ spring:
         options:
           model: "Qwen/Qwen2.5-7B-Instruct"
           temperature: 0.5
+    mcp:
+      client:
+        name: spring-ai-mcp-client
+        sse:
+          connections:
+            server1:
+              url: http://localhost:8080
+        toolcallback:
+          enabled: true

@@ -11,5 +11,5 @@ public interface SimpleWeatherService {
 
     String cityCode(String cityName);
 
-//    String cityWeather(String cityCode);
+    String cityWeather(String cityCode);
 }

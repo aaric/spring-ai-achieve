@@ -39,3 +39,8 @@ spring:
       server:
         name: spring-ai-mcp-server
         sse-message-endpoint: /mcp/message
+
+# AMap settings
+amap:
+  base-url: https://restapi.amap.com
+  api-key: your-api-key

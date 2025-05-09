@@ -21,10 +21,23 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class McpClientTests {
 
+//    private final OpenAiChatModel openAiChatModel;
+//    private final ToolCallbackProvider toolCallbackProvider;
+
     private final ChatClient chatClient;
 
     @Test
     public void testPromptText() {
+//        ChatClient chatClient = ChatClient.builder(openAiChatModel).build();
         System.err.println(chatClient.prompt().user("你是谁").call().content());
+    }
+
+    @Test
+    public void testMcpClient() {
+//        ChatClient chatClient = ChatClient.builder(openAiChatModel)
+//                .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
+//                .build();
+//        System.err.println(chatClient.prompt().user("推荐一些技术内容").call().content());
+        System.err.println(chatClient.prompt().user("你有一些最好的技术内容吗").call().content());
     }
 }

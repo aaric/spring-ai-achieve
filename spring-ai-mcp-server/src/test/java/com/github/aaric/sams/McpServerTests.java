@@ -1,5 +1,6 @@
 package com.github.aaric.sams;
 
+import com.github.aaric.sams.amap.CityHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * McpServerTests
@@ -20,8 +22,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class McpServerTests {
 
+    private final RestTemplate restTemplate;
+
     @Test
-    public void testPrint() {
-        System.err.println("Hello World!");
+    public void testGetCityCode() {
+        System.err.println(CityHelper.getCityCode("武汉"));
+    }
+
+    @Test
+    public void testGetCityWeather() {
+        System.err.println(restTemplate);
     }
 }

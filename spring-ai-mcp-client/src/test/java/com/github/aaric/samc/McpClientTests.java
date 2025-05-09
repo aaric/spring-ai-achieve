@@ -40,4 +40,9 @@ public class McpClientTests {
 //        System.err.println(chatClient.prompt().user("推荐一些技术内容").call().content());
         System.err.println(chatClient.prompt().user("你有一些最好的技术内容吗").call().content());
     }
+
+    @Test
+    public void testMcpClientWithCityCode() {
+        System.err.println(chatClient.prompt().user("告诉我一下武汉的城市代码").call().content());
+    }
 }

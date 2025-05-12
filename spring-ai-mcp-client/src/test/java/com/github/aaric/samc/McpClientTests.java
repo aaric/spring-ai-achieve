@@ -44,6 +44,8 @@ public class McpClientTests {
     @Test
     public void testMcpClientWithCityCode() {
 //        System.err.println(chatClient.prompt().user("武汉的城市代码").call().content());
-        System.err.println(chatClient.prompt().user("武汉的天气情况").call().content());
+//        System.err.println(chatClient.prompt().user("武汉的天气情况").call().content());
+//        System.err.println(chatClient.prompt().user("根据今天新华的天气情况，请给岀我的岀行建议？").call().content());
+        System.err.println(chatClient.prompt().user("今天武汉是否适合外出活动？").call().content());
     }
 }

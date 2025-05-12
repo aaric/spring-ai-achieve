@@ -39,6 +39,11 @@ public class McpServerTests {
     }
 
     @Test
+    public void testGetCityCodeMap() {
+        System.err.println(CityHelper.getCityCodeMap("新华"));
+    }
+
+    @Test
     public void testGetCityWeather() {
         String weatherUrl = String.format("%s/v3/weather/weatherInfo?key=%s&extensions=base&city=%s", baseUrl, apiKey, "420100");
         ResponseEntity<WeatherLiveResponse> response = restTemplate.getForEntity(weatherUrl, WeatherLiveResponse.class);

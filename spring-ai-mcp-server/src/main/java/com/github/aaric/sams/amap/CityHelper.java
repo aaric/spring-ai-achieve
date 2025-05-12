@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * CityHelper
@@ -21,6 +23,7 @@ public class CityHelper {
     private final static List<City> cityListLoaded = new ArrayList<>();
 
     public record City(@JsonProperty("name") String name,
+                       @JsonProperty("adname") String adname,
                        @JsonProperty("adcode") String adcode,
                        @JsonProperty("citycode") String citycode) {
 
@@ -45,6 +48,17 @@ public class CityHelper {
                 if (city.name().contains(searchName) && StringUtils.isNotEmpty(city.citycode)) {
                     return city.adcode();
                 }
+            }
+        }
+        return null;
+    }
+
+    public static Map<String, String> getCityCodeMap(String cityName) {
+        if (StringUtils.isNotEmpty(cityName)) {
+            String searchName = cityName.trim();
+            if (!cityListLoaded.isEmpty()) {
+                return cityListLoaded.stream().filter(city -> city.adname().contains(searchName))
+                        .collect(Collectors.toMap(City::adname, City::adcode));
             }
         }
         return null;

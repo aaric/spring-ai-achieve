@@ -7,7 +7,7 @@ plugins {
 
 allprojects {
     group = "com.sample"
-    version = "0.4.2-SNAPSHOT"
+    version = "0.5.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
@@ -60,7 +60,7 @@ subprojects {
             dependency "org.apache.commons:commons-lang3:3.17.0"
             dependency "org.apache.commons:commons-collections4:4.5"
 
-            dependency "io.github.pig-mesh.ai:deepseek-spring-boot-starter:1.4.7"
+            dependency "io.github.imfangs:dify-java-client:1.0.8"
         }
     }
 

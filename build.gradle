@@ -1,25 +1,24 @@
 plugins {
     id "java"
-    id "io.freefair.lombok" version "8.13.1" apply false
+    id "io.freefair.lombok" version "8.14" apply false
     id "io.spring.dependency-management" version "1.1.7" apply false
     id "org.springframework.boot" version "3.2.12" apply false
 }
 
 allprojects {
     group = "com.sample"
-    version = "0.5.0-SNAPSHOT"
+    version = "0.6.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
         springCloudVersion = "2023.0.5"
         springCloudAlibabaVersion = "2022.0.0.2"
-        springAiVersion= "1.0.0-M8"
+        springAiVersion= "1.0.0"
         knife4jVersion = "4.5.0"
     }
 
     repositories {
         maven { url "https://maven.aliyun.com/repository/public" }
-        maven { url "https://repository.incarcloud.com/content/groups/public" }
     }
 }
 

@@ -1,0 +1,44 @@
+# Undertow settings
+server:
+  port: ${SERVER_PORT:8081}
+  undertow:
+    threads:
+      io: ${UNDERTOW_IO_THREADS:1}
+      worker: ${UNDERTOW_WORKER_THREADS:8}
+    buffer-size: ${UNDERTOW_BUFFER_SIZE:1024}
+
+# Logging settings
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        web: ERROR
+        security: INFO
+        boot: INFO
+        ai: INFO
+      hibernate: INFO
+    com:
+      github: DEBUG
+  file:
+    path: ${LOGGING_FILE_PATH:./}
+    name: output.log
+  logback:
+    rollingpolicy:
+      max-file-size: ${LOGGING_FILE_MAX_SIZE:300MB}
+      max-history: ${LOGGING_FILE_MAX_HISTORY:3}
+
+# Spring settings
+spring:
+  profiles:
+    active: dev
+  application:
+    name: spring-ai-git-client
+  ai:
+    openai:
+      base-url: your-api-url
+      api-key: your-api-key
+      chat:
+        options:
+          model: "Qwen/Qwen2.5-7B-Instruct"
+          temperature: 0.5

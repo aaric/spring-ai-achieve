@@ -1,6 +1,6 @@
 package com.github.aaric.sagc.feign;
 
-import com.github.aaric.sagc.feign.gitee.IssuesApi;
+import com.github.aaric.sagc.feign.gitee.IssueApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class HttpClientFeignFactoryTests {
 
     @Test
     public void testCreateApi() {
-        IssuesApi issuesApi = httpClientFeignFactory.createApi(IssuesApi.class, "https://gitee.com/api/v5");
-        System.err.println(issuesApi);
+        IssueApi issueApi = httpClientFeignFactory.createApi(IssueApi.class, "https://gitee.com/api/v5");
+        System.err.println(issueApi);
     }
 }

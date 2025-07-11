@@ -1,5 +1,6 @@
 package com.github.aaric.sagc.feign.gitee;
 
+import com.github.aaric.sagc.config.GiteeProperties;
 import com.github.aaric.sagc.feign.HttpClientFeignFactory;
 import com.github.aaric.sagc.feign.dto.IssueDto;
 import com.github.aaric.sagc.feign.enums.IssueStateEnum;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -27,17 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class IssueApiTests {
 
-    @Value("${git.gitee.endpoint-url}")
-    private String endpointUrl;
-
-    @Value("${git.gitee.access-token}")
-    private String accessToken;
-
-    @Value("${git.gitee.test-owner}")
-    private String testOwner;
-
-    @Value("${git.gitee.test-repo}")
-    private String testRepo;
+    private final GiteeProperties giteeProperties;
 
     private final HttpClientFeignFactory httpClientFeignFactory;
 
@@ -45,32 +35,33 @@ public class IssueApiTests {
 
     @BeforeEach
     public void setUp() {
-        issueApi = httpClientFeignFactory.createApi(IssueApi.class, endpointUrl);
+        issueApi = httpClientFeignFactory.createApi(IssueApi.class, giteeProperties.getEndpointUrl());
     }
 
     @Test
     public void testQueryIssueList() throws Exception {
-        List<IssueDto> issueDtoList = issueApi.queryIssueList(accessToken, testOwner, testRepo, IssueStateEnum.ALL.getCode());
+        List<IssueDto> issueDtoList = issueApi.queryIssueList(giteeProperties.getAccessToken(),
+                giteeProperties.getTestOwner(), giteeProperties.getTestRepo(), IssueStateEnum.ALL.getCode());
         System.err.println(issueDtoList);
     }
 
     @Test
     public void testCreateIssue() throws Exception {
         IssueDto issueForm = new IssueDto();
-        issueForm.setRepo(testRepo);
+        issueForm.setRepo(giteeProperties.getTestRepo());
         issueForm.setTitle("hello world");
-        IssueDto issueDto = issueApi.createIssue(accessToken, testOwner, issueForm);
+        IssueDto issueDto = issueApi.createIssue(giteeProperties.getAccessToken(), giteeProperties.getTestOwner(), issueForm);
         System.err.println(issueDto);
     }
 
     @Test
     public void testUpdateIssue() throws Exception {
         IssueDto issueForm = new IssueDto();
-        issueForm.setRepo(testRepo);
+        issueForm.setRepo(giteeProperties.getTestRepo());
 //        issueForm.setTitle("hello ai");
-//        issueForm.setState("progressing");
+//        issueForm.setState(IssueStateEnum.PROGRESSING.getCode());
         issueForm.setBody("ai generate txt");
-        IssueDto issueDto = issueApi.updateIssue(accessToken, testOwner, "ICLOOM", issueForm);
+        IssueDto issueDto = issueApi.updateIssue(giteeProperties.getAccessToken(), giteeProperties.getTestOwner(), "ICLOOM", issueForm);
         System.err.println(issueDto);
     }
 }

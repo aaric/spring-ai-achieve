@@ -42,3 +42,19 @@ spring:
         options:
           model: "Qwen/Qwen2.5-7B-Instruct"
           temperature: 0.5
+
+# Feign settings
+feign:
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+# Git settings
+git:
+  gitee:
+    endpoint-url: https://gitee.com
+    access-token: your-access-token
+    test-owner: your-test-owner
+    test-repo: your-test-repo

@@ -55,7 +55,7 @@ public class SpringInitializrApiTests {
             try (ByteArrayInputStream bais = new ByteArrayInputStream(responseEntity.getBody());
                  ZipInputStream iss = new ZipInputStream(bais)) {
                 // 工作目录
-                File destDir = new File("build/generated-project");
+                File destDir = new File("embedded-project");
                 if (!destDir.exists()) {
                     destDir.mkdir();
                 }

@@ -2,6 +2,7 @@ apply plugin: "org.springframework.boot"
 
 dependencies {
     implementation "cn.hutool:hutool-all"
+    implementation "org.eclipse.jgit:org.eclipse.jgit"
 
     // Spring AI
     implementation "org.springframework.ai:spring-ai-starter-model-openai"

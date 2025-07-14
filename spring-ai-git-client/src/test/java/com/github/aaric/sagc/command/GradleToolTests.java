@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * GradleTests
+ * GradleToolTests
  *
  * @author Aaric
  * @version 0.7.0-SNAPSHOT
@@ -24,7 +24,7 @@ import java.io.InputStreamReader;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
-public class GradleCommandTests {
+public class GradleToolTests {
 
     @Test
     public void testGradleBuild() throws Exception {
@@ -59,7 +59,7 @@ public class GradleCommandTests {
 
     @Test
     public void testGradleBuildWithHuTool() throws Exception {
-        String command = "cmd.exe /c gradle clean";
+        String command = "cmd.exe /c gradle clean build";
 //        String output = RuntimeUtil.execForStr(command.split(" "));
 //        System.err.println(output);
         File projectDir = new File("embedded-project/demo");

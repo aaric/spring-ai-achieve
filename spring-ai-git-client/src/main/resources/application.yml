@@ -42,6 +42,8 @@ spring:
         options:
           model: "Qwen/Qwen2.5-7B-Instruct"
           temperature: 0.5
+  start:
+    base-url: https://start.spring.io
 
 # Feign settings
 feign:

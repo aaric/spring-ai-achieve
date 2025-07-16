@@ -45,6 +45,7 @@ public class IssueApiTests {
         System.err.println(issueDtoList);
     }
 
+    @Deprecated
     @Test
     public void testCreateIssue() throws Exception {
         IssueDto issueForm = new IssueDto();
@@ -54,6 +55,7 @@ public class IssueApiTests {
         System.err.println(issueDto);
     }
 
+    @Deprecated
     @Test
     public void testUpdateIssue() throws Exception {
         IssueDto issueForm = new IssueDto();

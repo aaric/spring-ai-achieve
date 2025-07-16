@@ -64,6 +64,7 @@ public class GitToolTests {
         }
     }
 
+    @Deprecated
     @Test
     public void testGitPush() throws Exception {
         if (!FileUtil.isEmpty(projectDir)) {

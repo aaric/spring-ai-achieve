@@ -42,6 +42,7 @@ public class SpringInitializrApiTests {
         springInitializrApi = httpClientFeignFactory.createApi(SpringInitializrApi.class, baseUrl);
     }
 
+    @Deprecated
     @Test
     public void testStarterZip() throws Exception {
         String projectGroup = "com.example";

@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class GradleToolTests {
 
+    @Deprecated
     @Test
     public void testGradleBuild() throws Exception {
         String command = "cmd.exe /c gradle build";
@@ -57,6 +58,7 @@ public class GradleToolTests {
         }
     }
 
+    @Deprecated
     @Test
     public void testGradleBuildWithHuTool() throws Exception {
         String command = "cmd.exe /c gradle clean build";

@@ -22,6 +22,7 @@ public class IssueTaskServiceTests {
 
     private final IssueTaskService issueTaskService;
 
+    @Deprecated
     @Test
     public void testDoSimpleAiTips() throws Exception {
         issueTaskService.doSimpleAiTips();

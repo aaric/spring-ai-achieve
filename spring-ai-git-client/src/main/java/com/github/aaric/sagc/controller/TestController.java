@@ -1,5 +1,6 @@
 package com.github.aaric.sagc.controller;
 
+import com.github.aaric.sagc.util.TerminalUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @Operation(summary = "编译项目获取日志")
+    @Operation(summary = "在终端执行编译命令")
     @GetMapping(value = "/build")
-    String build(@Parameter(description = "项目名称") @RequestParam String projectName) {
-        return "ok";
+    String build(@Parameter(description = "工作目录") @RequestParam String workDir,
+                 @Parameter(description = "执行命令") @RequestParam String command) {
+//        return TerminalUtil.execute(".", "java -version");
+        return TerminalUtil.execute(workDir, command);
     }
 }

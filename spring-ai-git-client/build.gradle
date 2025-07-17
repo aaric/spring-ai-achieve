@@ -13,6 +13,7 @@ dependencies {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
     }
     implementation "org.springframework.boot:spring-boot-starter-undertow"
+    implementation "com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter"
 
     // Feign Client
     implementation "org.springframework:spring-web"

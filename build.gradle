@@ -7,7 +7,7 @@ plugins {
 
 allprojects {
     group = "com.sample"
-    version = "0.9.0-SNAPSHOT"
+    version = "0.10.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
@@ -61,6 +61,8 @@ subprojects {
             dependency "org.apache.commons:commons-exec:1.5.0"
 
             dependency "cn.hutool:hutool-all:5.8.38"
+
+            dependency "com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.5.0"
 
             // dependency "com.gitee.sdk:gitee5j:1.1.0"
             dependency "org.eclipse.jgit:org.eclipse.jgit:7.3.0.202506031305-r"

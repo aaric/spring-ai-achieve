@@ -20,6 +20,8 @@
 
 ### 2 数据库配置
 
+### 2.1 Docker Compose
+
 ```yaml
 services:
   mariadb-v11:
@@ -48,4 +50,10 @@ services:
     ports:
       - 6379:6379
     command: redis-server /etc/redis/redis.conf
+```
+### 2.2 Docker Build
+
+```bash
+docker run -it --rm -u "$(id -u):$(id -g)" -w /project -v "$(pwd)":/project \
+  openjdk:21-m3g8-ubuntu bash -c "gradle clean build"
 ```

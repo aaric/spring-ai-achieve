@@ -27,8 +27,8 @@ public enum IssueStateEnum {
     @JsonCreator
     public static IssueStateEnum fromValue(String value) {
         for (IssueStateEnum state : values()) {
-            if (state.getCode().equalsIgnoreCase(value) ||
-                    state.name().equalsIgnoreCase(value)) {
+            if (state.getCode().equalsIgnoreCase(value)
+                    || state.name().equalsIgnoreCase(value)) {
                 return state;
             }
         }

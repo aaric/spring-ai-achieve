@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class CityHelper {
 
-    private final static List<City> cityListLoaded = new ArrayList<>();
+    private final static List<City> CITY_LOADED_LIST = new ArrayList<>();
 
     public record City(@JsonProperty("name") String name,
                        @JsonProperty("adname") String adname,
@@ -34,7 +34,7 @@ public class CityHelper {
             ObjectMapper mapper = new ObjectMapper();
             List<City> cities = mapper.readValue(is, mapper.getTypeFactory().constructCollectionType(List.class, City.class));
             if (null != cities && !cities.isEmpty()) {
-                cityListLoaded.addAll(cities);
+                CITY_LOADED_LIST.addAll(cities);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -44,7 +44,7 @@ public class CityHelper {
     public static String getCityCode(String cityName) {
         if (StringUtils.isNotEmpty(cityName)) {
             String searchName = cityName.trim();
-            for (City city : cityListLoaded) {
+            for (City city : CITY_LOADED_LIST) {
                 if (city.name().contains(searchName) && StringUtils.isNotEmpty(city.citycode)) {
                     return city.adcode();
                 }
@@ -56,8 +56,8 @@ public class CityHelper {
     public static Map<String, String> getCityCodeMap(String cityName) {
         if (StringUtils.isNotEmpty(cityName)) {
             String searchName = cityName.trim();
-            if (!cityListLoaded.isEmpty()) {
-                return cityListLoaded.stream().filter(city -> city.adname().contains(searchName))
+            if (!CITY_LOADED_LIST.isEmpty()) {
+                return CITY_LOADED_LIST.stream().filter(city -> city.adname().contains(searchName))
                         .collect(Collectors.toMap(City::adname, City::adcode));
             }
         }

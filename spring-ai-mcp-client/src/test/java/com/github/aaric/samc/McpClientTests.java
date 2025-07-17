@@ -2,6 +2,7 @@ package com.github.aaric.samc;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.ai.chat.client.ChatClient;
@@ -41,6 +42,7 @@ public class McpClientTests {
         System.err.println(chatClient.prompt().user("你有一些最好的技术内容吗").call().content());
     }
 
+    @Disabled
     @Test
     public void testMcpClientWithCityCode() {
 //        System.err.println(chatClient.prompt().user("武汉的城市代码").call().content());

@@ -1,6 +1,6 @@
 package com.github.aaric.sagc.controller;
 
-import com.github.aaric.sagc.util.TerminalUtil;
+import cn.hutool.core.util.RuntimeUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,10 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Operation(summary = "在终端执行编译命令")
-    @GetMapping(value = "/build")
-    String build(@Parameter(description = "工作目录") @RequestParam String workDir,
-                 @Parameter(description = "执行命令") @RequestParam String command) {
-//        return TerminalUtil.execute(".", "java -version");
-        return TerminalUtil.execute(workDir, command);
+    @GetMapping(value = "/execute")
+    String execute(@Parameter(description = "执行命令") @RequestParam String command) {
+        String output = RuntimeUtil.execForStr(command);
+        log.info("execute -> command={}, output={}", command, output);
+        return output;
     }
 }

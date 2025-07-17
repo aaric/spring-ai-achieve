@@ -56,4 +56,6 @@ services:
 ```bash
 docker run -it --rm -u "$(id -u):$(id -g)" -w /project -v "$(pwd)":/project \
   openjdk:21-m3g8-ubuntu bash -c "gradle clean build"
+
+docker run -i --rm -u 1000:1000 -w /project -v ./test-project-main:/project openjdk:21-m3g8-ubuntu gradle clean build
 ```

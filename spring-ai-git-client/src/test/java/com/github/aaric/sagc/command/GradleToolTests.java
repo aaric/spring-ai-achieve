@@ -3,16 +3,16 @@ package com.github.aaric.sagc.command;
 import cn.hutool.core.util.RuntimeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.PumpStreamHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * GradleToolTests
@@ -72,6 +72,23 @@ public class GradleToolTests {
             System.out.println(result);
             result = RuntimeUtil.getErrorResult(process);
             System.out.println(result);
+        }
+    }
+
+    @Test
+    public void testGradleBuildWithApacheExec() {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+             ByteArrayOutputStream errorOutputStream = new ByteArrayOutputStream()) {
+            CommandLine commandLine = CommandLine.parse("java -version");
+            DefaultExecutor executor = DefaultExecutor.builder().get();
+            PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream, errorOutputStream);
+            executor.setStreamHandler(streamHandler);
+            int code = executor.execute(commandLine);
+            System.out.println("code: " + code);
+            System.out.println(outputStream.toString());
+            System.out.println(errorOutputStream.toString());
+        } catch (Exception e) {
+            log.error("execute error", e);
         }
     }
 }

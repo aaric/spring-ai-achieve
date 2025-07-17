@@ -40,8 +40,8 @@ public class TestController {
             DefaultExecutor executor = DefaultExecutor.builder().get();
             PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream, errorOutputStream);
             executor.setStreamHandler(streamHandler);
-            int code = executor.execute(commandLine);
-            log.info("code: {}", code);
+            int exitValue = executor.execute(commandLine);
+            log.info("exitValue: {}", exitValue);
             output += outputStream.toString();
             output += errorOutputStream.toString();
         } catch (Exception e) {

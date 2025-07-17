@@ -3,9 +3,7 @@ package com.github.aaric.sagc.command;
 import cn.hutool.core.util.RuntimeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.commons.exec.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.*;
+import java.time.Duration;
 
 /**
  * GradleToolTests
@@ -83,10 +82,43 @@ public class GradleToolTests {
             DefaultExecutor executor = DefaultExecutor.builder().get();
             PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream, errorOutputStream);
             executor.setStreamHandler(streamHandler);
-            int code = executor.execute(commandLine);
-            System.out.println("code: " + code);
-            System.out.println(outputStream.toString());
-            System.out.println(errorOutputStream.toString());
+            ExecuteWatchdog watchdog = ExecuteWatchdog.builder()
+                    .setTimeout(Duration.ofSeconds(60)).get();
+            executor.setWatchdog(watchdog);
+            int exitValue = executor.execute(commandLine);
+            System.out.println("exitValue: " + exitValue);
+            System.out.println(outputStream);
+            System.out.println(errorOutputStream);
+        } catch (Exception e) {
+            log.error("execute error", e);
+        }
+    }
+
+    @Test
+    public void testGradleBuildWithApacheExecAsync() {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+             ByteArrayOutputStream errorOutputStream = new ByteArrayOutputStream()) {
+            CommandLine commandLine = CommandLine.parse("java -version");
+            DefaultExecutor executor = DefaultExecutor.builder().get();
+            PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream, errorOutputStream);
+            executor.setStreamHandler(streamHandler);
+
+            ExecuteResultHandler resultHandler = new ExecuteResultHandler() {
+                @Override
+                public void onProcessComplete(int exitValue) {
+                    System.out.println("exitValue: " + exitValue);
+                    System.out.println(outputStream);
+                    System.out.println(errorOutputStream);
+                }
+
+                @Override
+                public void onProcessFailed(ExecuteException e) {
+                    System.out.println(errorOutputStream);
+                }
+            };
+
+            executor.execute(commandLine, resultHandler);
+            Thread.currentThread().join();
         } catch (Exception e) {
             log.error("execute error", e);
         }

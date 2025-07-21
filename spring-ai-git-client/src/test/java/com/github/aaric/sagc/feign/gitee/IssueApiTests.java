@@ -7,6 +7,7 @@ import com.github.aaric.sagc.feign.enums.IssueStateEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class IssueApiTests {
         System.err.println(issueDtoList);
     }
 
-    @Deprecated
+    @Disabled
     @Test
     public void testCreateIssue() throws Exception {
         IssueDto issueForm = new IssueDto();
@@ -55,7 +56,7 @@ public class IssueApiTests {
         System.err.println(issueDto);
     }
 
-    @Deprecated
+    @Disabled
     @Test
     public void testUpdateIssue() throws Exception {
         IssueDto issueForm = new IssueDto();

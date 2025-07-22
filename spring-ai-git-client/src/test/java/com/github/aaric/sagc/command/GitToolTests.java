@@ -46,7 +46,7 @@ public class GitToolTests {
     public void testGitClone() throws Exception {
         if (FileUtil.isEmpty(projectDir)) {
             Git.cloneRepository()
-                    .setURI(giteeProperties.getEndpointUrl() + "/cooggo/test-project.git")
+                    .setURI(giteeProperties.getEndpointUrl() + "/aaricee/test-project.git")
                     .setDirectory(projectDir)
                     .setCredentialsProvider(new UsernamePasswordCredentialsProvider(
                             giteeProperties.getTestOwner(), giteeProperties.getAccessToken()))

@@ -33,14 +33,12 @@ spring:
   profiles:
     active: dev
   application:
-    name: spring-ai-mcp-server
+    name: spring-ai-docker-client
   ai:
-    mcp:
-      server:
-        name: spring-ai-mcp-server
-        sse-message-endpoint: /mcp/message
-
-# AMap settings
-amap:
-  base-url: https://restapi.amap.com
-  api-key: your-api-key
+    openai:
+      base-url: your-api-url
+      api-key: your-api-key
+      chat:
+        options:
+          model: "Qwen/Qwen2.5-7B-Instruct"
+          temperature: 0.5

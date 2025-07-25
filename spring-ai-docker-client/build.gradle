@@ -1,0 +1,13 @@
+apply plugin: "org.springframework.boot"
+
+dependencies {
+    implementation "cn.hutool:hutool-all"
+    implementation "org.eclipse.jgit:org.eclipse.jgit"
+
+    implementation "org.apache.commons:commons-exec"
+    implementation "org.jetbrains.pty4j:pty4j"
+
+    // Spring AI
+    implementation "org.springframework.ai:spring-ai-starter-model-openai"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+}

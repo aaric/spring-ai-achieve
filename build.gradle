@@ -7,7 +7,7 @@ plugins {
 
 allprojects {
     group = "com.sample"
-    version = "0.11.0-SNAPSHOT"
+    version = "0.12.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
@@ -54,6 +54,12 @@ subprojects {
                 entry "slf4j-api"
                 entry "slf4j-simple"
                 entry "slf4j-log4j12"
+            }
+
+            dependencySet(group: "com.github.docker-java", version: "3.5.3") {
+                entry "docker-java-core"
+                entry "docker-java-transport-httpclient5"
+                entry "docker-java-transport-zerodep"
             }
 
             dependency "org.apache.commons:commons-lang3:3.17.0"

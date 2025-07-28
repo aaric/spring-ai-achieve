@@ -7,6 +7,9 @@ dependencies {
     implementation "org.apache.commons:commons-exec"
     implementation "org.jetbrains.pty4j:pty4j"
 
+    implementation "com.github.docker-java:docker-java-core"
+    implementation "com.github.docker-java:docker-java-transport-zerodep"
+
     // Spring AI
     implementation "org.springframework.ai:spring-ai-starter-model-openai"
     implementation "org.springframework.boot:spring-boot-starter-webflux"

@@ -59,3 +59,65 @@ docker run -it --rm -u "$(id -u):$(id -g)" -w /project -v "$(pwd)":/project \
 
 docker run -i --rm -u 1000:1000 -w /project -v ./test-project-main:/project openjdk:21-m3g8-ubuntu gradle clean build
 ```
+
+## 3 Docker TLS
+
+### 3.1 生成自签名证书
+
+```bash
+# 创建目录存放证书
+mkdir -p /etc/docker/certs && cd /etc/docker/certs
+
+# 生成 CA 私钥和公钥
+openssl genrsa -aes256 -out ca-key.pem 4096
+openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem
+
+# 生成服务器密钥+签名请求+证书
+openssl genrsa -out server-key.pem 4096
+openssl req -subj "/CN=192.168.1.100" -sha256 -new -key server-key.pem -out server.csr
+echo subjectAltName = IP:192.168.1.100,IP:127.0.0.1 >> extfile.cnf
+echo extendedKeyUsage = serverAuth >> extfile.cnf
+openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem \
+  -CAcreateserial -out server-cert.pem -extfile extfile.cnf
+
+# 生成客户端密钥+签名请求+证书
+openssl genrsa -out key.pem 4096
+openssl req -subj '/CN=client' -new -key key.pem -out client.csr
+echo extendedKeyUsage = clientAuth > extfile-client.cnf
+openssl x509 -req -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem \
+  -CAcreateserial -out cert.pem -extfile extfile-client.cnf
+
+# 清理临时文件
+rm -v client.csr server.csr extfile.cnf extfile-client.cnf
+```
+### 3.1 配置Docker以支持TLS
+
+```bash
+#vim /etc/docker/daemon.json
+#"""
+#{
+#  "tls": true,
+#  "tlscert": "/etc/docker/certs/server-cert.pem",
+#  "tlskey": "/etc/docker/certs/server-key.pem",
+#  "tlscacert": "/etc/docker/certs/ca.pem",
+#  "hosts": ["tcp://0.0.0.0:2376", "unix:///var/run/docker.sock"]
+#}
+#"""
+vim /usr/lib/systemd/system/docker.service
+"""
+#ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2376 -H unix://var/run/docker.sock --tlsverify --tlscacert=/etc/docker/certs/ca.pem --tlscert=/etc/docker/certs/server-cert.pem --tlskey=/etc/docker/certs/server-key.pem
+"""
+systemctl daemon-reload
+systemctl restart docker
+systemctl status docker
+```
+### 3.3 验证TLS连接
+
+```bash
+# curl
+curl --cacert ca.pem --cert cert.pem --key key.pem https://192.168.1.250:2376/version
+
+# docker
+docker --tlsverify --tlscacert=ca.pem --tlscert=cert.pem --tlskey=key.pem -H tcp://device01:2376 version
+```

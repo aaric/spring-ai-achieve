@@ -1,5 +1,6 @@
 package com.github.aaric.sads;
 
+import com.github.aaric.sads.config.HostProperties;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientConfig;
@@ -21,7 +22,7 @@ import java.time.Duration;
  * DockerClientTests
  *
  * @author Aaric
- * @version 0.12.0-SNAPSHOT
+ * @version 0.6.0-SNAPSHOT
  */
 @Slf4j
 @SpringBootTest
@@ -29,13 +30,15 @@ import java.time.Duration;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class DockerClientTests {
 
+    private final HostProperties hostProperties;
+
     @Disabled
     @Test
     public void testDockerInfo() throws Exception {
         DockerClientConfig dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 .withDockerTlsVerify(true)
-                .withDockerHost("tcp://192.168.1.100:2376")
-                .withDockerCertPath("E:\\docker-ssl-certs")
+                .withDockerHost("tcp://%s:%d".formatted(hostProperties.getIntranetIp(), hostProperties.getDockerPort()))
+                .withDockerCertPath(hostProperties.getDockerCertsPath())
                 .build();
         DockerHttpClient dockerHttpClient = new ZerodepDockerHttpClient.Builder()
                 .dockerHost(dockerClientConfig.getDockerHost())

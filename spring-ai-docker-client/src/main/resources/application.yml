@@ -42,3 +42,12 @@ spring:
         options:
           model: "Qwen/Qwen2.5-7B-Instruct"
           temperature: 0.5
+
+# Host settings
+host:
+  intranet-ip: 127.0.0.1
+  ssh-port: 22
+  username: root
+  password: pass
+  docker-port: 2376
+  docker-certs-path: /etc/ssl/certs

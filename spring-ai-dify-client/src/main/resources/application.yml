@@ -34,3 +34,10 @@ spring:
     active: dev
   application:
     name: spring-ai-dify-client
+
+# Dify settings
+dify:
+  base-url: your-api-url
+  app-key:
+    ai-joke-campus: your-api-key
+    ai-joke-career: your-api-key

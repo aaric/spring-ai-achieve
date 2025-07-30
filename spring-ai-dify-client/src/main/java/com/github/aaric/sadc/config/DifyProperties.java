@@ -10,7 +10,7 @@ import java.util.Map;
  * DifyProperties
  *
  * @author Aaric
- * @version 0.6.0-SNAPSHOT
+ * @version 0.14.0-SNAPSHOT
  */
 @Data
 @Configuration

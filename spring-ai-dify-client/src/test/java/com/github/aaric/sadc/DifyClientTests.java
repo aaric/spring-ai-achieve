@@ -31,8 +31,7 @@ public class DifyClientTests {
 
     @Disabled
     @Test
-    public void testWorkflow() throws Exception {
-        log.debug("difyProperties: {}", difyProperties);
+    public void testChatFlow() throws Exception {
         DifyChatflowClient chatFlowClient = DifyClientFactory.createChatWorkflowClient(difyProperties.getBaseUrl(),
                 difyProperties.getAppKey().get("ai-joke-campus"));
 

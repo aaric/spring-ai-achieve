@@ -14,6 +14,7 @@ allprojects {
         springCloudVersion = "2023.0.5"
         springCloudAlibabaVersion = "2022.0.0.2"
         springAiVersion= "1.0.0"
+        springAiAlibabaVersion= "1.0.0.2"
         knife4jVersion = "4.5.0"
     }
 
@@ -33,6 +34,7 @@ subprojects {
 
     dependencies {
         implementation platform("org.springframework.ai:spring-ai-bom:$springAiVersion")
+        implementation platform("com.alibaba.cloud.ai:spring-ai-alibaba-bom:$springAiAlibabaVersion")
 
         implementation "org.slf4j:slf4j-api"
         implementation "org.apache.commons:commons-lang3"

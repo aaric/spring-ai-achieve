@@ -25,7 +25,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -96,11 +95,11 @@ public class DockerClientTests {
         String containerName = "my-hello-world";
         List<Container> containerList = dockerClient.listContainersCmd()
                 .withShowAll(true)
-                .withNameFilter(Arrays.asList(containerName))
+                .withNameFilter(List.of(containerName))
                 .exec();
 
         if (null != containerList && !containerList.isEmpty()) {
-            containerId = containerList.get(0).getId();
+            containerId = containerList.getFirst().getId();
         } else {
             CreateContainerResponse response = dockerClient.createContainerCmd("hello-world")
                     .withName(containerName)
@@ -133,7 +132,7 @@ public class DockerClientTests {
                 })
                 .awaitCompletion(10, TimeUnit.SECONDS);
 
-        dockerClient.startContainerCmd(containerId).exec();
+//        dockerClient.stopContainerCmd(containerId).exec();
         dockerClient.removeContainerCmd(containerId)
                 .withForce(true)
                 .withRemoveVolumes(true)

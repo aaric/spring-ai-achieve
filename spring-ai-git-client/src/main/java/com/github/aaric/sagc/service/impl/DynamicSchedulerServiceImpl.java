@@ -43,7 +43,7 @@ public class DynamicSchedulerServiceImpl implements DynamicSchedulerService {
     }
 
     @Override
-    public boolean addTask(String taskId, Runnable task, String cronExpression) throws Exception {
+    public boolean addTask(String taskId, Runnable task, String cronExpression) {
         if (taskMap.containsKey(taskId)) {
             return false;
         }
@@ -54,12 +54,12 @@ public class DynamicSchedulerServiceImpl implements DynamicSchedulerService {
     }
 
     @Override
-    public boolean addTask(String taskId, Runnable task, Duration interval) throws Exception {
+    public boolean addTask(String taskId, Runnable task, Duration interval) {
         return addTask(taskId, task, interval, false);
     }
 
     @Override
-    public boolean addTask(String taskId, Runnable task, Duration interval, boolean isFixedRate) throws Exception {
+    public boolean addTask(String taskId, Runnable task, Duration interval, boolean isFixedRate) {
         if (taskMap.containsKey(taskId)) {
             return false;
         }
@@ -72,13 +72,13 @@ public class DynamicSchedulerServiceImpl implements DynamicSchedulerService {
     }
 
     @Override
-    public boolean updateTask(String taskId, Runnable task, String cronExpression) throws Exception {
+    public boolean updateTask(String taskId, Runnable task, String cronExpression) {
         removeTask(taskId);
         return addTask(taskId, task, cronExpression);
     }
 
     @Override
-    public boolean removeTask(String taskId) throws Exception {
+    public boolean removeTask(String taskId) {
         if (taskMap.containsKey(taskId)) {
             ScheduledFuture<?> future = taskMap.get(taskId);
             future.cancel(true);

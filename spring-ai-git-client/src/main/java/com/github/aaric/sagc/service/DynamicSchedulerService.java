@@ -33,9 +33,8 @@ public interface DynamicSchedulerService {
      * @param task           任务
      * @param cronExpression 任务执行表达式
      * @return 状态
-     * @throws Exception 异常
      */
-    boolean addTask(String taskId, Runnable task, String cronExpression) throws Exception;
+    boolean addTask(String taskId, Runnable task, String cronExpression);
 
     /**
      * 添加任务
@@ -44,9 +43,8 @@ public interface DynamicSchedulerService {
      * @param task     任务
      * @param interval 任务执行间隔
      * @return 状态
-     * @throws Exception 异常
      */
-    boolean addTask(String taskId, Runnable task, Duration interval) throws Exception;
+    boolean addTask(String taskId, Runnable task, Duration interval);
 
     /**
      * 添加任务
@@ -56,9 +54,8 @@ public interface DynamicSchedulerService {
      * @param interval    任务执行间隔
      * @param isFixedRate 是否固定间隔
      * @return 状态
-     * @throws Exception 异常
      */
-    boolean addTask(String taskId, Runnable task, Duration interval, boolean isFixedRate) throws Exception;
+    boolean addTask(String taskId, Runnable task, Duration interval, boolean isFixedRate);
 
     /**
      * 更新任务
@@ -67,16 +64,14 @@ public interface DynamicSchedulerService {
      * @param task           任务
      * @param cronExpression 任务执行表达式
      * @return 状态
-     * @throws Exception 异常
      */
-    boolean updateTask(String taskId, Runnable task, String cronExpression) throws Exception;
+    boolean updateTask(String taskId, Runnable task, String cronExpression);
 
     /**
      * 移除任务
      *
      * @param taskId 任务ID
      * @return 状态
-     * @throws Exception 异常
      */
-    boolean removeTask(String taskId) throws Exception;
+    boolean removeTask(String taskId);
 }

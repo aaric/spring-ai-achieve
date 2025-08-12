@@ -28,9 +28,9 @@ import java.io.ByteArrayOutputStream;
 @RestController
 public class TestController {
 
-    @Operation(summary = "在终端执行编译命令")
-    @GetMapping(value = "/execute")
-    String execute(@Parameter(description = "执行命令") @RequestParam String command) {
+    @Operation(summary = "【终端】执行编译命令")
+    @GetMapping(value = "/shellExecute")
+    String shellExecute(@Parameter(description = "执行命令") @RequestParam String command) {
 //        String output = RuntimeUtil.execForStr(command);
 //        log.info("execute -> command={}, output={}", command, output);
         String output = "";
@@ -47,7 +47,7 @@ public class TestController {
         } catch (Exception e) {
             log.error("execute error", e);
         }
-        log.info("execute -> command={}, output={}", command, output);
+        log.info("shellExecute -> command={}, output={}", command, output);
         return output;
     }
 }

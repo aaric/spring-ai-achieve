@@ -78,6 +78,18 @@ public class DynamicSchedulerServiceImpl implements DynamicSchedulerService {
     }
 
     @Override
+    public boolean updateTask(String taskId, Runnable task, Duration interval) {
+        removeTask(taskId);
+        return addTask(taskId, task, interval);
+    }
+
+    @Override
+    public boolean updateTask(String taskId, Runnable task, Duration interval, boolean isFixedRate) {
+        removeTask(taskId);
+        return addTask(taskId, task, interval, isFixedRate);
+    }
+
+    @Override
     public boolean removeTask(String taskId) {
         if (taskMap.containsKey(taskId)) {
             ScheduledFuture<?> future = taskMap.get(taskId);

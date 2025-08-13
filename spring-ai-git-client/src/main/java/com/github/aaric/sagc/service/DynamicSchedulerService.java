@@ -68,6 +68,27 @@ public interface DynamicSchedulerService {
     boolean updateTask(String taskId, Runnable task, String cronExpression);
 
     /**
+     * 更新任务
+     *
+     * @param taskId   任务ID
+     * @param task     任务
+     * @param interval 任务执行间隔
+     * @return 状态
+     */
+    boolean updateTask(String taskId, Runnable task, Duration interval);
+
+    /**
+     * 更新任务
+     *
+     * @param taskId      任务ID
+     * @param task        任务
+     * @param interval    任务执行间隔
+     * @param isFixedRate 是否固定间隔
+     * @return 状态
+     */
+    boolean updateTask(String taskId, Runnable task, Duration interval, boolean isFixedRate);
+
+    /**
      * 移除任务
      *
      * @param taskId 任务ID

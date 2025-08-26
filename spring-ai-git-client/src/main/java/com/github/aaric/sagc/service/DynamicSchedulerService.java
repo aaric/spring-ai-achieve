@@ -52,7 +52,7 @@ public interface DynamicSchedulerService {
      * @param taskId      任务ID
      * @param task        任务
      * @param interval    任务执行间隔
-     * @param isFixedRate 是否固定间隔
+     * @param isFixedRate 是否固定速率
      * @return 状态
      */
     boolean addTask(String taskId, Runnable task, Duration interval, boolean isFixedRate);
@@ -83,7 +83,7 @@ public interface DynamicSchedulerService {
      * @param taskId      任务ID
      * @param task        任务
      * @param interval    任务执行间隔
-     * @param isFixedRate 是否固定间隔
+     * @param isFixedRate 是否固定速率
      * @return 状态
      */
     boolean updateTask(String taskId, Runnable task, Duration interval, boolean isFixedRate);

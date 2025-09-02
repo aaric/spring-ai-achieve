@@ -1,0 +1,35 @@
+# Logging settings
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        web: ERROR
+        security: INFO
+        boot: INFO
+        ai: INFO
+      hibernate: INFO
+    com:
+      github: DEBUG
+  file:
+    path: ${LOGGING_FILE_PATH:./}
+    name: output.log
+  logback:
+    rollingpolicy:
+      max-file-size: ${LOGGING_FILE_MAX_SIZE:300MB}
+      max-history: ${LOGGING_FILE_MAX_HISTORY:3}
+
+# Spring settings
+spring:
+  profiles:
+    active: dev
+  application:
+    name: spring-ai-lang-chain4j
+  ai:
+    openai:
+      base-url: http://langchain4j.dev/demo/openai/v1
+      api-key: demo
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.5

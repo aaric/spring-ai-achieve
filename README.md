@@ -121,3 +121,11 @@ curl --cacert ca.pem --cert cert.pem --key key.pem https://192.168.1.250:2376/ve
 # docker
 docker --tlsverify --tlscacert=ca.pem --tlscert=cert.pem --tlskey=key.pem -H tcp://device01:2376 version
 ```
+
+## 4 AI笔记
+
+### 4.1 结构化输出有3种实现方式
+
+- 利用大模型的 JSON Schema
+- 利用 Prompt+JSONMode
+- 利用 Prompt

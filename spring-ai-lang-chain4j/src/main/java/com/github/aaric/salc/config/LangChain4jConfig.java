@@ -5,7 +5,6 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.service.AiServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * LangChain4j 配置
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Aaric
  * @version 0.17.0-SNAPSHOT
  */
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class LangChain4jConfig {
 

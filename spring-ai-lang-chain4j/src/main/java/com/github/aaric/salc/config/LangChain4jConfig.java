@@ -33,6 +33,7 @@ public class LangChain4jConfig {
                 .chatModel(chatModel)
                 .chatMemory(chatMemory)
                 .chatMemoryProvider(messageId -> chatMemory)
+//                .contentRetriever(null)
                 .build();
     }
 }

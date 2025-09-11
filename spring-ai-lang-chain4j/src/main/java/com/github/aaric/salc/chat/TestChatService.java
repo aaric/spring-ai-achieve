@@ -1,5 +1,6 @@
 package com.github.aaric.salc.chat;
 
+import dev.langchain4j.model.output.structured.Description;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
@@ -22,15 +23,17 @@ public interface TestChatService {
     @SystemMessage(fromResource = "chat/system-prompt.txt")
     String chatThree(@MemoryId int memoryId, @UserMessage String question);
 
-    record Joke(String question, String content) {
+    record Joke(@Description("用户提问") String question,
+                @Description("笑话内容") String content) {
     }
 
-    @SystemMessage("""
+    /*@SystemMessage("""
             你是一个笑话大王。
-            
+
             请严格按照Joke类的结构返回数据：
-            - question: 用户的笑话问题
-            - content: 笑话内容
-            """)
+            - question: 用户提问
+            - content: 返回的笑话内容
+            """)*/
+    @SystemMessage(fromResource = "chat/system-prompt.txt")
     Joke chatFour(String question);
 }

@@ -22,22 +22,22 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class LangChain4jAppTests {
 
-    @Value("${spring.ai.openai.base-url}")
+    @Value("${langchain4j.open-ai.chat-model.base-url}")
     private String baseUrl;
 
-    @Value("${spring.ai.openai.api-key}")
+    @Value("${langchain4j.open-ai.chat-model.api-key}")
     private String apiKey;
 
-    @Value("${spring.ai.openai.chat.options.model}")
+    @Value("${langchain4j.open-ai.chat-model.model-name}")
     private String modelName;
 
     @Test
     public void testPromptText() {
-        OpenAiChatModel openAiChatModel = OpenAiChatModel.builder()
+        OpenAiChatModel chatModel = OpenAiChatModel.builder()
                 .baseUrl(baseUrl)
                 .apiKey(apiKey)
                 .modelName(modelName)
                 .build();
-        System.err.println(openAiChatModel.chat("你是谁？你的版本？"));
+        System.err.println(chatModel.chat("你是谁？你的版本？"));
     }
 }

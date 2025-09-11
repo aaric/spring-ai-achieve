@@ -25,11 +25,16 @@ spring:
     active: dev
   application:
     name: spring-ai-lang-chain4j
-  ai:
-    openai:
-      base-url: http://langchain4j.dev/demo/openai/v1
+
+# LangChain4j settings
+langchain4j:
+  open-ai:
+    chat-model:
+      base-url: https://api.openai.com/v1
       api-key: demo
-      chat:
-        options:
-          model: gpt-4o-mini
-          temperature: 0.5
+      model-name: gpt-4o-mini
+      temperature: 0.7
+      max-tokens: 2000
+      timeout: 60s
+      log-requests: true
+      log-responses: true

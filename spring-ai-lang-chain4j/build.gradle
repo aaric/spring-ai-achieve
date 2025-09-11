@@ -3,7 +3,7 @@ apply plugin: "org.springframework.boot"
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter"
 
+    implementation "dev.langchain4j:langchain4j"
 //    implementation "dev.langchain4j:langchain4j-open-ai"
-//    implementation "dev.langchain4j:langchain4j"
     implementation "dev.langchain4j:langchain4j-open-ai-spring-boot-starter"
 }

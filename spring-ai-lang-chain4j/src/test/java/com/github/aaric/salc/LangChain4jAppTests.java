@@ -1,5 +1,11 @@
 package com.github.aaric.salc;
 
+import dev.langchain4j.data.message.AiMessage;
+import dev.langchain4j.data.message.SystemMessage;
+import dev.langchain4j.data.message.TextContent;
+import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +37,45 @@ public class LangChain4jAppTests {
     @Value("${langchain4j.open-ai.chat-model.model-name}")
     private String modelName;
 
+    private final ChatModel chatModel;
+
     @Test
-    public void testPromptText() {
-        OpenAiChatModel chatModel = OpenAiChatModel.builder()
+    public void testCustomPromptText() {
+        OpenAiChatModel customChatModel = OpenAiChatModel.builder()
                 .baseUrl(baseUrl)
                 .apiKey(apiKey)
                 .modelName(modelName)
                 .build();
-        System.err.println(chatModel.chat("你是谁？你的版本？"));
+        log.debug("{}", customChatModel.chat("你是谁？你的版本？"));
+    }
+
+    @Test
+    public void testPromptMessage1() {
+        UserMessage userMessage = UserMessage.from("你是谁？你的版本？");
+        ChatResponse chatResponse = chatModel.chat(userMessage);
+        AiMessage aiMessage = chatResponse.aiMessage();
+        log.debug("{}", aiMessage.text());
+    }
+
+    @Test
+    public void testPromptMessage2() {
+        UserMessage userMessage = UserMessage.from(
+                TextContent.from("这个图片是啥？")
+//                ImageContent.from("https://baikebcs.bdimg.com/baike-react/common/logo-baike.svg")
+        );
+        ChatResponse chatResponse = chatModel.chat(userMessage);
+        AiMessage aiMessage = chatResponse.aiMessage();
+        log.debug("{}", aiMessage.text());
+    }
+
+    @Test
+    public void testPromptMessage3() {
+        SystemMessage systemMessage = SystemMessage.from("你是一个笑话大王。");
+        UserMessage userMessage = UserMessage.from(
+                TextContent.from("讲个笑话")
+        );
+        ChatResponse chatResponse = chatModel.chat(systemMessage, userMessage);
+        AiMessage aiMessage = chatResponse.aiMessage();
+        log.debug("{}", aiMessage.text());
     }
 }

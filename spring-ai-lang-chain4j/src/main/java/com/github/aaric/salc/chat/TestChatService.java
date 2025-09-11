@@ -25,8 +25,7 @@ public interface TestChatService {
     record Joke(String question, String content) {
     }
 
-    @SystemMessage(
-            """
+    @SystemMessage("""
             你是一个笑话大王。
             
             请严格按照Joke类的结构返回数据：

@@ -41,4 +41,9 @@ public class TestChatServiceTests {
         result = testChatService.chatThree(2, "你好，我是谁来着？");
         log.debug(result);
     }
+
+    @Test
+    public void testChatFour() {
+        log.debug("{}", testChatService.chatFour("讲个笑话，不要太冷"));
+    }
 }

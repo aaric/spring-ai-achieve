@@ -21,4 +21,16 @@ public interface TestChatService {
 
     @SystemMessage(fromResource = "chat/system-prompt.txt")
     String chatThree(@MemoryId int memoryId, @UserMessage String question);
+
+    record Joke(String question, String content) {
+    }
+
+    @SystemMessage("""
+            你是一个笑话大王。
+            
+            请严格按照Joke类的结构返回数据：
+            - question: 用户的笑话问题
+            - content: 笑话内容
+            """)
+    Joke chatFour(String question);
 }

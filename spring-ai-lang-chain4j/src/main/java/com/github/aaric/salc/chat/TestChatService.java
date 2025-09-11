@@ -1,7 +1,8 @@
 package com.github.aaric.salc.chat;
 
+import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
-import dev.langchain4j.service.spring.AiService;
+import dev.langchain4j.service.UserMessage;
 
 /**
  * 测试对话 Service接口
@@ -9,7 +10,7 @@ import dev.langchain4j.service.spring.AiService;
  * @author Aaric
  * @version 0.17.0-SNAPSHOT
  */
-@AiService
+//@AiService
 public interface TestChatService {
 
     @SystemMessage("你是一个笑话大王。")
@@ -17,4 +18,7 @@ public interface TestChatService {
 
     @SystemMessage(fromResource = "chat/system-prompt.txt")
     String chatTwo(String question);
+
+    @SystemMessage(fromResource = "chat/system-prompt.txt")
+    String chatThree(@MemoryId int memoryId, @UserMessage String question);
 }

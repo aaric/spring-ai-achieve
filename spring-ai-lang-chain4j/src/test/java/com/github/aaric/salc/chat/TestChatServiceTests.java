@@ -24,11 +24,21 @@ public class TestChatServiceTests {
 
     @Test
     public void testChatOne() {
-        log.info(testChatService.chatOne("讲个笑话"));
+        log.debug(testChatService.chatOne("讲个笑话"));
     }
 
     @Test
     public void testChatTwo() {
-        log.info(testChatService.chatTwo("讲个笑话"));
+        log.debug(testChatService.chatTwo("讲个笑话"));
+    }
+
+    @Test
+    public void testChatThreeWithMemory() {
+        String result = testChatService.chatThree(1, "你好，我是一名Java程序员。讲个职场笑话");
+        log.debug(result);
+        result = testChatService.chatThree(1, "你好，我是谁来着？");
+        log.debug(result);
+        result = testChatService.chatThree(2, "你好，我是谁来着？");
+        log.debug(result);
     }
 }

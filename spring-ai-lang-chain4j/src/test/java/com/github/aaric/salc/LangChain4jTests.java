@@ -26,7 +26,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
-public class LangChain4jAppTests {
+public class LangChain4jTests {
 
     @Value("${langchain4j.open-ai.chat-model.base-url}")
     private String baseUrl;

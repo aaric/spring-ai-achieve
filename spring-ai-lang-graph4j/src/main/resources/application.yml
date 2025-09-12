@@ -1,0 +1,27 @@
+# Logging settings
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        web: ERROR
+        security: INFO
+        boot: INFO
+        ai: INFO
+      hibernate: INFO
+    com:
+      github: DEBUG
+  file:
+    path: ${LOGGING_FILE_PATH:./}
+    name: output.log
+  logback:
+    rollingpolicy:
+      max-file-size: ${LOGGING_FILE_MAX_SIZE:300MB}
+      max-history: ${LOGGING_FILE_MAX_HISTORY:3}
+
+# Spring settings
+spring:
+  profiles:
+    active: dev
+  application:
+    name: spring-ai-lang-graph4j

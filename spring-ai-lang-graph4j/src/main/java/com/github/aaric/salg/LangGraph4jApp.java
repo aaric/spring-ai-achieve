@@ -1,4 +1,4 @@
-package com.github.aaric.salc;
+package com.github.aaric.salg;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
@@ -9,16 +9,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * LangChain4jApp
+ * LangGraph4jApp
  *
  * @author Aaric
- * @version 0.16.0-SNAPSHOT
+ * @version 0.18.0-SNAPSHOT
  */
 @OpenAPIDefinition(
         info = @Info(
                 title = "在线API文档",
                 version = "1.0.0",
-                description = "基于 SpringBoot + LangChain4j 开发",
+                description = "基于 SpringBoot + LangChain4j + LangGraph4j 开发",
                 contact = @Contact(
                         name = "开发团队",
                         email = "vipaaric@github.com",
@@ -37,9 +37,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         }
 )
 @SpringBootApplication
-public class LangChain4jApp {
+public class LangGraph4jApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(LangChain4jApp.class, args);
+        SpringApplication.run(LangGraph4jApp.class, args);
     }
 }

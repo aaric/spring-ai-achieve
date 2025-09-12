@@ -46,4 +46,9 @@ public class TestChatServiceTests {
     public void testChatFour() {
         log.debug("{}", testChatService.chatFour("讲个笑话，不要太冷"));
     }
+
+    @Test
+    public void testChatFive() {
+        log.debug("{}", testChatService.chatFive("搜索一下今天的热点新闻"));
+    }
 }

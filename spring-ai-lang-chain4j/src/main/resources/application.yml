@@ -38,3 +38,7 @@ langchain4j:
       timeout: 60s
       log-requests: true
       log-responses: true
+
+# BigModel settings
+bigmodel:
+  api-key: demo

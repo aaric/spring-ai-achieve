@@ -36,4 +36,7 @@ public interface TestChatService {
             """)*/
     @SystemMessage(fromResource = "chat/system-prompt.txt")
     Joke chatFour(String question);
+
+    @SystemMessage("你是一个网络搜索专家。")
+    String chatFive(String question);
 }

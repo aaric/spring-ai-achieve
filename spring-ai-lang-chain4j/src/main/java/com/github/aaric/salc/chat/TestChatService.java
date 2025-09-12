@@ -1,9 +1,11 @@
 package com.github.aaric.salc.chat;
 
+import com.github.aaric.salc.guardrail.CustomInputGuardrail;
 import dev.langchain4j.model.output.structured.Description;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
+import dev.langchain4j.service.guardrail.InputGuardrails;
 
 /**
  * 测试对话 Service接口
@@ -12,6 +14,7 @@ import dev.langchain4j.service.UserMessage;
  * @version 0.17.0-SNAPSHOT
  */
 //@AiService
+@InputGuardrails({CustomInputGuardrail.class})
 public interface TestChatService {
 
     @SystemMessage("你是一个笑话大王。")

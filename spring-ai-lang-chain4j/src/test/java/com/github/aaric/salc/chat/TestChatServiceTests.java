@@ -29,7 +29,8 @@ public class TestChatServiceTests {
 
     @Test
     public void testChatTwo() {
-        log.debug(testChatService.chatTwo("讲个笑话"));
+//        log.debug(testChatService.chatTwo("讲个笑话"));
+        log.debug(testChatService.chatTwo("讲个关于死亡笑话"));
     }
 
     @Test

@@ -52,4 +52,9 @@ public class TestChatServiceTests {
     public void testChatFive() {
         log.debug("{}", testChatService.chatFive("搜索一下今天的热点新闻"));
     }
+
+    @Test
+    public void testChatSix() {
+        log.debug("{}", testChatService.chatSix(1, "讲个笑话").blockFirst());
+    }
 }

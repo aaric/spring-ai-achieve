@@ -4,6 +4,7 @@ import com.github.aaric.salc.chat.TestChatService;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.service.AiServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,8 @@ public class LangChain4jConfig {
     private String bigModelApiKey;
 
     private final ChatModel chatModel;
+
+    private final StreamingChatModel streamingChatModel;
 
     /*@Bean
     public McpToolProvider mcpToolProvider() {
@@ -51,6 +54,7 @@ public class LangChain4jConfig {
                 .build();
         return AiServices.builder(TestChatService.class)
                 .chatModel(chatModel)
+                .streamingChatModel(streamingChatModel)
                 .chatMemory(chatMemory)
                 .chatMemoryProvider(messageId -> chatMemory)
 //                .contentRetriever(null)

@@ -1,3 +1,12 @@
+# Undertow settings
+server:
+  port: ${SERVER_PORT:8082}
+  undertow:
+    threads:
+      io: ${UNDERTOW_IO_THREADS:1}
+      worker: ${UNDERTOW_WORKER_THREADS:8}
+    buffer-size: ${UNDERTOW_BUFFER_SIZE:1024}
+
 # Logging settings
 logging:
   level:
@@ -26,6 +35,24 @@ spring:
   application:
     name: spring-ai-lang-chain4j
 
+# Swagger settings
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    groups-order: DESC
+    display-request-duration: true
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  group-configs:
+    - group: "default"
+      paths-to-match: "/**"
+      packages-to-scan: com.github.aaric.salc.controller
+  use-management-port: false
+
 # LangChain4j settings
 langchain4j:
   open-ai:
@@ -33,7 +60,23 @@ langchain4j:
       base-url: https://api.openai.com/v1
       api-key: demo
       model-name: gpt-4o-mini
-      temperature: 0.7
+      temperature: 0.5
+      max-tokens: 2000
+      timeout: 60s
+      log-requests: true
+      log-responses: true
+    embedding-model:
+      base-url: https://api.openai.com/v1
+      api-key: demo
+      model-name: gpt-4o-mini
+      timeout: 60s
+      log-requests: true
+      log-responses: true
+    streaming-chat-model:
+      base-url: https://api.openai.com/v1
+      api-key: demo
+      model-name: gpt-4o-mini
+      temperature: 0.5
       max-tokens: 2000
       timeout: 60s
       log-requests: true

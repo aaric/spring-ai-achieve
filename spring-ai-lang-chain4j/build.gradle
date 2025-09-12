@@ -1,7 +1,8 @@
 apply plugin: "org.springframework.boot"
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "com.github.xiaoymin:knife4j-openapi3-webflux-jakarta-spring-boot-starter"
 
 //    implementation "dev.langchain4j:langchain4j-open-ai"
     implementation "dev.langchain4j:langchain4j-open-ai-spring-boot-starter"
@@ -9,4 +10,5 @@ dependencies {
     implementation "dev.langchain4j:langchain4j-spring-boot-starter"
 //    implementation "dev.langchain4j:langchain4j-easy-rag"
 //    implementation "dev.langchain4j:langchain4j-mcp"
+    implementation "dev.langchain4j:langchain4j-reactor"
 }

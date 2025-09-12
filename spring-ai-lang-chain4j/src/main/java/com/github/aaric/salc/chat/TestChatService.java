@@ -6,6 +6,7 @@ import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.guardrail.InputGuardrails;
+import reactor.core.publisher.Flux;
 
 /**
  * 测试对话 Service接口
@@ -42,4 +43,7 @@ public interface TestChatService {
 
     @SystemMessage("你是一个网络搜索专家。")
     String chatFive(String question);
+
+    @SystemMessage(fromResource = "chat/system-prompt.txt")
+    Flux<String> chatSix(@MemoryId int memoryId, @UserMessage String question);
 }

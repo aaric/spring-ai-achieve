@@ -3,4 +3,6 @@ apply plugin: "org.springframework.boot"
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-webflux"
     implementation "com.github.xiaoymin:knife4j-openapi3-webflux-jakarta-spring-boot-starter"
+
+    implementation "org.bsc.langgraph4j:langgraph4j-langchain4j"
 }

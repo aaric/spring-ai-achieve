@@ -31,30 +31,67 @@ import static org.bsc.langgraph4j.action.AsyncNodeAction.node_async;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class LangGraph4jTests {
 
+    private static String step(Integer index) {
+        return "step" + index;
+    }
+
     @Test
     public void testWorkflowCooking() throws Exception {
         StateGraph<AgentState> workflow = new StateGraph<>(AgentState::new)
-                .addNode("step1", node_async(state -> {
-                    log.debug("step1: {}", state);
-                    return Map.of("step1", "洗菜");
+                .addNode(step(1), node_async(state -> {
+                    log.debug("{}: {}", step(1), state);
+                    return Map.of(step(1), "洗菜");
                 }))
-                .addNode("step2", node_async(state -> {
-                    log.debug("step2: {}", state);
-                    return Map.of("step2", "切菜");
+                .addNode(step(2), node_async(state -> {
+                    log.debug("{}: {}", step(2), state);
+                    return Map.of(step(2), "切菜");
                 }))
-                .addNode("step3", node_async(state -> {
-                    log.debug("step3: {}", state);
-                    return Map.of("step3", "炒菜");
+                .addNode(step(3), node_async(state -> {
+                    log.debug("{}: {}", step(3), state);
+                    return Map.of(step(3), "炒菜");
                 }))
-                .addEdge(START, "step1")
-                .addEdge("step1", "step2")
-                .addEdge("step2", "step3")
-                .addEdge("step3", END);
+                .addEdge(START, step(1))
+                .addEdge(step(1), step(2))
+                .addEdge(step(2), step(3))
+                .addEdge(step(3), END);
 
         CompiledGraph<AgentState> app = workflow.compile();
         GraphRepresentation graph = app.getGraph(GraphRepresentation.Type.PLANTUML, "炒菜智能体");
-        log.debug("graph plantuml: {}", graph.content());
+        log.debug("cooking plantuml: {}", graph.content());
         Optional<AgentState> result = app.invoke(Map.of("input", "西红柿"));
+        result.ifPresent(state -> log.info("{}", state.data()));
+    }
+
+    @Test
+    public void testWorkflowCoding() throws Exception {
+        StateGraph<AgentState> workflow = new StateGraph<>(AgentState::new)
+                .addNode(step(1), node_async(state -> {
+                    log.debug("{}: {}", step(1), state);
+                    return Map.of(step(1), "评估需求");
+                }))
+                .addNode(step(2), node_async(state -> {
+                    log.debug("{}: {}", step(2), state);
+                    return Map.of(step(2), "后端开发");
+                }))
+                .addNode(step(3), node_async(state -> {
+                    log.debug("{}: {}", step(3), state);
+                    return Map.of(step(3), "前端开发");
+                }))
+                .addNode(step(4), node_async(state -> {
+                    log.debug("{}: {}", step(4), state);
+                    return Map.of(step(4), "联调测试");
+                }))
+                .addEdge(START, step(1))
+                .addEdge(step(1), step(2))
+                .addEdge(step(1), step(3))
+                .addEdge(step(2), step(4))
+                .addEdge(step(3), step(4))
+                .addEdge(step(4), END);
+
+        CompiledGraph<AgentState> app = workflow.compile();
+        GraphRepresentation graph = app.getGraph(GraphRepresentation.Type.PLANTUML, "项目开发智能体");
+        log.debug("coking plantuml: {}", graph.content());
+        Optional<AgentState> result = app.invoke(Map.of("input", "Web项目"));
         result.ifPresent(state -> log.info("{}", state.data()));
     }
 }

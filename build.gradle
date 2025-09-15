@@ -7,7 +7,7 @@ plugins {
 
 allprojects {
     group = "com.sample"
-    version = "0.17.0-SNAPSHOT"
+    version = "0.18.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
@@ -17,6 +17,7 @@ allprojects {
         springAiAlibabaVersion= "1.0.0.2"
         knife4jVersion = "4.5.0"
         langchain4jVersion = "1.4.0"
+        langgraph4jVersion = "1.6.2"
     }
 
     repositories {
@@ -52,6 +53,7 @@ subprojects {
             mavenBom "com.alibaba.cloud.ai:spring-ai-alibaba-bom:$springAiAlibabaVersion"
             mavenBom "com.github.xiaoymin:knife4j-dependencies:$knife4jVersion"
             mavenBom "dev.langchain4j:langchain4j-bom:$langchain4jVersion"
+            mavenBom "org.bsc.langgraph4j:langgraph4j-bom:$langgraph4jVersion"
         }
 
         dependencies {

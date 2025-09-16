@@ -5,6 +5,7 @@ import dev.langchain4j.model.output.structured.Description;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
+import dev.langchain4j.service.V;
 import dev.langchain4j.service.guardrail.InputGuardrails;
 import reactor.core.publisher.Flux;
 
@@ -46,4 +47,8 @@ public interface TestChatService {
 
     @SystemMessage(fromResource = "chat/system-prompt.txt")
     Flux<String> chatSix(@MemoryId int memoryId, @UserMessage String question);
+
+    @SystemMessage(fromResource = "chat/system-prompt.txt")
+    @UserMessage("讲个笑话，类型为{{jokeType}}")
+    String chatSeven(@V("jokeType") String jokeType);
 }

@@ -11,4 +11,6 @@ dependencies {
 //    implementation "dev.langchain4j:langchain4j-easy-rag"
 //    implementation "dev.langchain4j:langchain4j-mcp"
     implementation "dev.langchain4j:langchain4j-reactor"
+
+    implementation "cn.hutool:hutool-all"
 }

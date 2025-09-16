@@ -113,7 +113,7 @@ public class LangGraph4jTests {
     }
 
     @Test
-    public void testWorkflowMonitor() throws Exception {
+    public void testWorkflowOpinion() throws Exception {
         StateGraph<AgentState> workflow = new StateGraph<>(AgentState::new)
                 .addNode(step(1), node_async(state -> {
                     log.debug("{}: {}", step(1), state);
@@ -142,9 +142,9 @@ public class LangGraph4jTests {
 
         CompiledGraph<AgentState> app = workflow.compile();
         GraphRepresentation graph = app.getGraph(GraphRepresentation.Type.PLANTUML, "舆情识别智能体");
-        log.debug("monitor plantuml: {}", graph.content());
-//        Optional<AgentState> result = app.invoke(Map.of("input", "今天肚子有点痛"));
-        Optional<AgentState> result = app.invoke(Map.of("input", "今天天气很好"));
+        log.debug("opinion plantuml: {}", graph.content());
+//        Optional<AgentState> result = app.invoke(Map.of("input", "今天天气很好"));
+        Optional<AgentState> result = app.invoke(Map.of("input", "今天肚子不舒服"));
         result.ifPresent(state -> log.debug("{}", state.data()));
     }
 }

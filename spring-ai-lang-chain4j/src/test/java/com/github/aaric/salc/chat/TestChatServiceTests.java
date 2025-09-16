@@ -1,5 +1,9 @@
 package com.github.aaric.salc.chat;
 
+import cn.hutool.core.annotation.AnnotationUtil;
+import cn.hutool.core.util.ReflectUtil;
+import dev.langchain4j.service.SystemMessage;
+import dev.langchain4j.service.UserMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -7,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.lang.reflect.Method;
 
 /**
  * TestChatServiceTests
@@ -56,5 +62,17 @@ public class TestChatServiceTests {
     @Test
     public void testChatSix() {
         log.debug("{}", testChatService.chatSix(1, "讲个笑话").blockFirst());
+    }
+
+    @Test
+    public void testChatSeven() {
+        String jokeType = "职场";
+        log.debug("{}", testChatService.chatSeven(jokeType));
+
+        Method chatSevenMethod = ReflectUtil.getMethod(TestChatService.class, "chatSeven", String.class);
+        SystemMessage systemMessage = AnnotationUtil.getAnnotation(chatSevenMethod, SystemMessage.class);
+        UserMessage userMessage = AnnotationUtil.getAnnotation(chatSevenMethod, UserMessage.class);
+        log.debug("{}", systemMessage.fromResource());
+        log.debug("{}", userMessage.value()[0].replace("{{jokeType}}", jokeType));
     }
 }

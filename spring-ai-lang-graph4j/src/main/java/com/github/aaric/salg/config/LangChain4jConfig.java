@@ -2,19 +2,9 @@ package com.github.aaric.salg.config;
 
 import com.github.aaric.salg.service.OpinionJudgeService;
 import com.github.aaric.salg.service.OpinionProcessService;
-import dev.langchain4j.data.message.ContentType;
-import dev.langchain4j.data.message.SystemMessage;
-import dev.langchain4j.data.message.TextContent;
-import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
-import dev.langchain4j.model.chat.listener.ChatModelErrorContext;
-import dev.langchain4j.model.chat.listener.ChatModelListener;
-import dev.langchain4j.model.chat.listener.ChatModelRequestContext;
-import dev.langchain4j.model.chat.listener.ChatModelResponseContext;
-import dev.langchain4j.model.chat.request.ChatRequest;
-import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.service.AiServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +24,7 @@ public class LangChain4jConfig {
 
 //    private final ChatModel chatModel;
 
-    @Bean
+    /*@Bean
     public ChatModelListener chatModelListener() {
         return new ChatModelListener() {
 
@@ -63,7 +53,7 @@ public class LangChain4jConfig {
                             .findFirst()
                             .orElse(null);
                 }
-                System.err.printf("hash=%s, system=%s, user=%s\n", this.hashCode(),
+                System.err.printf("hash=%s, systemPrompt=%s, userPrompt=%s\n", this.hashCode(),
                         systemPrompt, userPrompt);
                 log.info("onRequest: {}", chatRequest);
             }
@@ -81,7 +71,7 @@ public class LangChain4jConfig {
                 log.error("onError: {}", errorContext.error().getMessage());
             }
         };
-    }
+    }*/
 
     @Bean
     public OpinionProcessService opinionAdviceService(ChatModel chatModel) {

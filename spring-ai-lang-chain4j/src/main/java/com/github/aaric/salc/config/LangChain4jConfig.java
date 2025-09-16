@@ -24,9 +24,9 @@ public class LangChain4jConfig {
     @Value("${bigmodel.api-key}")
     private String bigModelApiKey;
 
-    private final ChatModel chatModel;
+//    private final ChatModel chatModel;
 
-    private final StreamingChatModel streamingChatModel;
+//    private final StreamingChatModel streamingChatModel;
 
     /*@Bean
     public McpToolProvider mcpToolProvider() {
@@ -45,7 +45,7 @@ public class LangChain4jConfig {
     }*/
 
     @Bean
-    public TestChatService testChatService() {
+    public TestChatService testChatService(ChatModel chatModel, StreamingChatModel streamingChatModel) {
 //        return AiServices.create(TestChatService.class, chatModel);
 //        ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
         ChatMemory chatMemory = MessageWindowChatMemory.builder()

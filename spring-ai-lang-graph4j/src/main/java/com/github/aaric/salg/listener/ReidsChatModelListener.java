@@ -1,0 +1,79 @@
+package com.github.aaric.salg.listener;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.aaric.salg.util.ChatMessageFormatUtil;
+import dev.langchain4j.model.chat.listener.ChatModelErrorContext;
+import dev.langchain4j.model.chat.listener.ChatModelListener;
+import dev.langchain4j.model.chat.listener.ChatModelRequestContext;
+import dev.langchain4j.model.chat.listener.ChatModelResponseContext;
+import dev.langchain4j.model.chat.request.ChatRequest;
+import dev.langchain4j.model.chat.response.ChatResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * RedisChatModelListener
+ *
+ * @author Aaric
+ * @version 0.19.0-SNAPSHOT
+ */
+@Slf4j
+@Component
+public class ReidsChatModelListener implements ChatModelListener {
+
+    @Override
+    public void onRequest(ChatModelRequestContext requestContext) {
+        log.info("onRequest: {}", requestContext.chatRequest());
+    }
+
+    @Override
+    public void onResponse(ChatModelResponseContext responseContext) {
+        // LLM输入
+        ChatRequest chatRequest = responseContext.chatRequest();
+        String systemPrompt = ChatMessageFormatUtil.formatSystemMessage(chatRequest.messages());
+        String userPrompt = ChatMessageFormatUtil.formatUserMessage(chatRequest.messages());
+
+        // LLM工具调用
+        List<Map<String, Object>> toolMessages = ChatMessageFormatUtil.computeToolMessage(chatRequest.messages());
+
+        // LLM输出
+        ChatResponse chatResponse = responseContext.chatResponse();
+        String output = chatResponse.aiMessage().text();
+
+        // 日志
+        if (StringUtils.hasText(output)) {
+            String toolJson = null;
+            try {
+                toolJson = new ObjectMapper().writeValueAsString(toolMessages);
+            } catch (JsonProcessingException e) {
+                log.error("onResponse exception", e);
+            }
+            System.err.printf("hash=%s, systemPrompt=%s, userPrompt=%s, output=%s, toolJson=%s\n", this.hashCode(),
+                    systemPrompt, userPrompt, output, toolJson);
+        }
+
+        log.info("onResponse: {}", responseContext.chatResponse());
+    }
+
+    @Override
+    public void onError(ChatModelErrorContext errorContext) {
+        // LLM输入
+        ChatRequest chatRequest = errorContext.chatRequest();
+        String systemPrompt = ChatMessageFormatUtil.formatSystemMessage(chatRequest.messages());
+        String userPrompt = ChatMessageFormatUtil.formatUserMessage(chatRequest.messages());
+
+        // LLM异常
+        String exception = errorContext.error().getMessage();
+
+        // 日志
+        System.err.printf("hash=%s, systemPrompt=%s, userPrompt=%s, exception=%s\n", this.hashCode(),
+                systemPrompt, userPrompt, exception);
+
+        log.error("onError: {}", errorContext.error().getMessage());
+    }
+}

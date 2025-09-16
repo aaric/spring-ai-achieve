@@ -2,6 +2,7 @@ package com.github.aaric.salg.config;
 
 import com.github.aaric.salg.service.OpinionJudgeService;
 import com.github.aaric.salg.service.OpinionProcessService;
+import com.github.aaric.salg.tool.WeatherTool;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
@@ -74,19 +75,7 @@ public class LangChain4jConfig {
     }*/
 
     @Bean
-    public OpinionProcessService opinionAdviceService(ChatModel chatModel) {
-        ChatMemory chatMemory = MessageWindowChatMemory.builder()
-                .maxMessages(10)
-                .build();
-        return AiServices.builder(OpinionProcessService.class)
-                .chatModel(chatModel)
-                .chatMemory(chatMemory)
-                .chatMemoryProvider(messageId -> chatMemory)
-                .build();
-    }
-
-    @Bean
-    public OpinionJudgeService opinionJudgeService(ChatModel chatModel) {
+    public OpinionJudgeService opinionJudgeService(ChatModel chatModel, WeatherTool weatherTool) {
         ChatMemory chatMemory = MessageWindowChatMemory.builder()
                 .maxMessages(10)
                 .build();
@@ -94,6 +83,20 @@ public class LangChain4jConfig {
                 .chatModel(chatModel)
                 .chatMemory(chatMemory)
                 .chatMemoryProvider(messageId -> chatMemory)
+                .tools(weatherTool)
+                .build();
+    }
+
+    @Bean
+    public OpinionProcessService opinionAdviceService(ChatModel chatModel, WeatherTool weatherTool) {
+        ChatMemory chatMemory = MessageWindowChatMemory.builder()
+                .maxMessages(10)
+                .build();
+        return AiServices.builder(OpinionProcessService.class)
+                .chatModel(chatModel)
+                .chatMemory(chatMemory)
+                .chatMemoryProvider(messageId -> chatMemory)
+                .tools(weatherTool)
                 .build();
     }
 }

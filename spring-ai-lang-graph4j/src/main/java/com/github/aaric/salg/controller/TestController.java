@@ -1,7 +1,8 @@
 package com.github.aaric.salg.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aaric.salg.graph.OpinionWorkflowGraph;
-import com.github.aaric.salg.listener.ReidsChatModelListener;
+import com.github.aaric.salg.log.LlmLog;
 import com.github.aaric.salg.util.MDCRequestIdUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,6 +36,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TestController {
 
+    private final ObjectMapper objectMapper;
+
     private final OpinionWorkflowGraph opinionWorkflowGraph;
 
     private final StringRedisTemplate stringRedisTemplate;
@@ -59,11 +62,14 @@ public class TestController {
 
     @Operation(summary = "查询日志列表", description = "简单测试一下")
     @GetMapping("/log/list")
-    public Mono<List<String>> logList() throws Exception {
-        List<String> logList = listOperations.range(ReidsChatModelListener.LLM_LOG_KEY, 0, -1);
-        if (CollectionUtils.isEmpty(logList)) {
-            logList = new ArrayList<>();
+    public Mono<List<LlmLog>> logList() throws Exception {
+        List<LlmLog> llmLogList = new ArrayList<>();
+        List<String> llmLogJsonList = listOperations.range(LlmLog.LLM_LOG_KEY, 0, -1);
+        if (!CollectionUtils.isEmpty(llmLogJsonList)) {
+            for (String llmLogJson : llmLogJsonList) {
+                llmLogList.add(objectMapper.readValue(llmLogJson, LlmLog.class));
+            }
         }
-        return Mono.just(logList);
+        return Mono.just(llmLogList);
     }
 }

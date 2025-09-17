@@ -23,7 +23,7 @@ import reactor.core.publisher.Flux;
  * @author Aaric
  * @version 0.17.0-SNAPSHOT
  */
-@Tag(name = "测试模块API", description = "测试模块相关的CRUD操作")
+@Tag(name = "测试模块API", description = "测试学习示例相关操作")
 @RequestMapping("/api/test")
 @RestController
 @Slf4j

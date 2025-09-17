@@ -9,4 +9,6 @@ dependencies {
 
     implementation "dev.langchain4j:langchain4j-open-ai-spring-boot-starter"
     implementation "org.bsc.langgraph4j:langgraph4j-langchain4j"
+
+    implementation "cn.hutool:hutool-all"
 }

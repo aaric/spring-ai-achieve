@@ -26,6 +26,6 @@ public class OpinionWorkflowGraphTests {
     public void testInvoke() throws Exception {
 //        log.info("{}", opinionWorkflowGraph.invoke("今天天气很好"));
 //        log.info("{}", opinionWorkflowGraph.invoke("今天肚子不舒服"));
-        log.info("{}", opinionWorkflowGraph.invoke("今天武汉的天气，会影响我的身体状况。"));
+        log.info("{}", opinionWorkflowGraph.invoke("今天武汉的天气，会影响我的身体状况").data());
     }
 }

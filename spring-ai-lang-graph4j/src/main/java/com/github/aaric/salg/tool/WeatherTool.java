@@ -17,7 +17,6 @@ public class WeatherTool {
 
     @Tool("获取指定城市的天气情况")
     public static String getWeather(@P("城市名称") String cityName) {
-        System.err.printf("cityName=%s\n", cityName);
 //        return "今天" + cityName + "的天气是晴天";
         return "今天" + cityName + "的天气是下雨";
     }

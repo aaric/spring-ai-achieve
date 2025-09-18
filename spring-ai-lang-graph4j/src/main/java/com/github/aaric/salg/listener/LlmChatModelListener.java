@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aaric.salg.log.LlmLog;
 import com.github.aaric.salg.util.ChatMessageFormatUtil;
-import com.github.aaric.salg.util.MDCRequestIdUtil;
+import com.github.aaric.salg.util.RequestIdUtil;
 import dev.langchain4j.model.chat.listener.ChatModelErrorContext;
 import dev.langchain4j.model.chat.listener.ChatModelListener;
 import dev.langchain4j.model.chat.listener.ChatModelRequestContext;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * RedisChatModelListener
+ * LlmChatModelListener
  *
  * @author Aaric
  * @version 0.19.0-SNAPSHOT
@@ -29,7 +29,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ReidsChatModelListener implements ChatModelListener {
+public class LlmChatModelListener implements ChatModelListener {
 
     private final ObjectMapper objectMapper;
 
@@ -69,7 +69,8 @@ public class ReidsChatModelListener implements ChatModelListener {
         } catch (JsonProcessingException e) {
             log.error("onResponse exception", e);
         }
-        LlmLog llmLog = new LlmLog(MDCRequestIdUtil.getRequestId(), systemPrompt, userPrompt, output, toolJson);
+        LlmLog llmLog = new LlmLog(RequestIdUtil.get(), systemPrompt, userPrompt, output, toolJson);
+        llmLog.setAgentName();
         String llmLogJson = objectMapper.writeValueAsString(llmLog);
 //        listOperations.rightPush(LlmLog.LLM_LOG_KEY, llmLogJson);
         stringRedisTemplate.convertAndSend(LlmLog.LLM_LOG_KEY, llmLogJson);
@@ -90,7 +91,8 @@ public class ReidsChatModelListener implements ChatModelListener {
         String exception = errorContext.error().getMessage();
 
         // 日志
-        LlmLog llmLog = new LlmLog(MDCRequestIdUtil.getRequestId(), systemPrompt, userPrompt, exception);
+        LlmLog llmLog = new LlmLog(RequestIdUtil.get(), systemPrompt, userPrompt, exception);
+        llmLog.setAgentName();
         String llmLogJson = objectMapper.writeValueAsString(llmLog);
 //        listOperations.rightPush(LlmLog.LLM_LOG_KEY, llmLogJson);
         stringRedisTemplate.convertAndSend(LlmLog.LLM_LOG_KEY, llmLogJson);

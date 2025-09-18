@@ -5,16 +5,16 @@ import org.slf4j.MDC;
 import java.util.UUID;
 
 /**
- * MDC请求ID工具类
+ * RequestIdUtil
  *
  * @author Aaric
  * @version 0.20.0-SNAPSHOT
  */
-public class MDCRequestIdUtil {
+public class RequestIdUtil {
 
     public static final String MDC_KEY_REQUEST_ID = "requestId";
 
-    public static String getRequestId() {
+    public static String get() {
         String requestId = MDC.get(MDC_KEY_REQUEST_ID);
         if (requestId == null) {
             requestId = UUID.randomUUID()
@@ -25,8 +25,8 @@ public class MDCRequestIdUtil {
         return requestId;
     }
 
-    public static String removeRequestId() {
-        String requestId = getRequestId();
+    public static String remove() {
+        String requestId = get();
         MDC.remove(MDC_KEY_REQUEST_ID);
         return requestId;
     }

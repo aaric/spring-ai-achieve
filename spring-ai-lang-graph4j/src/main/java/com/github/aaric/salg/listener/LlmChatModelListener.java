@@ -44,7 +44,7 @@ public class LlmChatModelListener implements ChatModelListener {
 
     @Override
     public void onRequest(ChatModelRequestContext requestContext) {
-        log.info("onRequest: {}", requestContext.chatRequest());
+//        log.info("onRequest: {}", requestContext.chatRequest());
     }
 
     @SneakyThrows
@@ -76,7 +76,7 @@ public class LlmChatModelListener implements ChatModelListener {
         stringRedisTemplate.convertAndSend(LlmLog.LLM_LOG_KEY, llmLogJson);
 //        System.err.println(llmLogJson);
 
-        log.info("onResponse: {}", responseContext.chatResponse());
+//        log.info("onResponse: {}", responseContext.chatResponse());
     }
 
     @SneakyThrows
@@ -98,6 +98,6 @@ public class LlmChatModelListener implements ChatModelListener {
         stringRedisTemplate.convertAndSend(LlmLog.LLM_LOG_KEY, llmLogJson);
 //        System.err.println(llmLogJson);
 
-        log.error("onError: {}", errorContext.error().getMessage());
+//        log.error("onError: {}", errorContext.error().getMessage());
     }
 }

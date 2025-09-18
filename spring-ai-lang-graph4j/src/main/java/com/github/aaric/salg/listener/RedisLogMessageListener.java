@@ -25,7 +25,7 @@ public class RedisLogMessageListener implements MessageListener {
     public void onMessage(Message message, byte[] pattern) {
         String channel = new String(message.getChannel());
         String body = new String(message.getBody());
-        log.debug("onMessage -> channel={}, body={}", channel, body);
+//        log.debug("onMessage -> channel={}, body={}", channel, body);
 
         // 处理消息
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();

@@ -28,6 +28,6 @@ public class OpinionProcessAgent implements NodeAction<OpinionAgentState> {
     public Map<String, Object> apply(OpinionAgentState state) throws Exception {
         log.info("{}: {}", step(2), state);
         String input = (String) state.value("input").orElse("");
-        return Map.of(OpinionAgentState.MESSAGE_KEY, opinionProcessService.chat(input));
+        return Map.of(OpinionAgentState.PROCESS_KEY, opinionProcessService.chat(input));
     }
 }

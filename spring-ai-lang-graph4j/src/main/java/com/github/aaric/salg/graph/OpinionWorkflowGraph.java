@@ -39,7 +39,7 @@ public class OpinionWorkflowGraph {
                 .addEdge(START, step(1))
                 .addConditionalEdges(step(1),
                         AsyncEdgeAction.edge_async(state -> {
-                            String type = state.message();
+                            String type = state.judge();
                             return type.equals("正面") ? "end" : step(2);
                         }),
                         Map.of(

@@ -141,8 +141,10 @@ public class LangGraph4jTests {
                 .addEdge(step(2), END);
 
         CompiledGraph<AgentState> app = workflow.compile();
-        GraphRepresentation graph = app.getGraph(GraphRepresentation.Type.PLANTUML, "舆情识别智能体");
-        log.debug("opinion plantuml: {}", graph.content());
+//        GraphRepresentation graph = app.getGraph(GraphRepresentation.Type.PLANTUML, "舆情识别智能体");
+//        log.debug("opinion plantuml: {}", graph.content());
+        GraphRepresentation graph = app.getGraph(GraphRepresentation.Type.MERMAID, "舆情识别智能体");
+        log.debug("opinion mermaid: {}", graph.content());
 //        Optional<AgentState> result = app.invoke(Map.of("input", "今天天气很好"));
         Optional<AgentState> result = app.invoke(Map.of("input", "今天肚子不舒服"));
         result.ifPresent(state -> log.debug("{}", state.data()));

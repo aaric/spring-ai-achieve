@@ -18,7 +18,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class LlmLog {
 
-    public static final String LLM_LOG_KEY = "llm-log";
+    public static final String LLM_LOG_KEY = "llm-log2";
 
     private Long id;
 

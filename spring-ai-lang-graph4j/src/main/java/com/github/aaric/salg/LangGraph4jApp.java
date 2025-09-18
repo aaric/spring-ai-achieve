@@ -7,6 +7,10 @@ import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerResponse;
 
 /**
  * LangGraph4jApp
@@ -41,5 +45,12 @@ public class LangGraph4jApp {
 
     public static void main(String[] args) {
         SpringApplication.run(LangGraph4jApp.class, args);
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> routes() {
+        return RouterFunctions.route().GET("/api/func/hello",
+                        request -> ServerResponse.ok().bodyValue("Hello World!"))
+                .build();
     }
 }

@@ -5,10 +5,12 @@ import com.github.aaric.salg.agent.OpinionProcessAgent;
 import com.github.aaric.salg.state.OpinionAgentState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bsc.langgraph4j.CompileConfig;
 import org.bsc.langgraph4j.CompiledGraph;
 import org.bsc.langgraph4j.GraphStateException;
 import org.bsc.langgraph4j.StateGraph;
 import org.bsc.langgraph4j.action.AsyncEdgeAction;
+import org.bsc.langgraph4j.checkpoint.MemorySaver;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -49,7 +51,10 @@ public class OpinionWorkflowGraph {
                 )
                 .addEdge(step(2), END);
 
-        CompiledGraph<OpinionAgentState> app = workflow.compile();
+        CompileConfig config = CompileConfig.builder()
+                .checkpointSaver(new MemorySaver())
+                .build();
+        CompiledGraph<OpinionAgentState> app = workflow.compile(config);
 //        GraphRepresentation plantuml = app.getGraph(GraphRepresentation.Type.PLANTUML, "舆情识别智能体");
 //        log.debug("opinion plantuml: {}", plantuml.content());
         return app.invoke(Map.of("input", question)).orElse(null);

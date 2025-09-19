@@ -5,10 +5,7 @@ import com.github.aaric.salg.agent.OpinionProcessAgent;
 import com.github.aaric.salg.state.OpinionAgentState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bsc.langgraph4j.CompileConfig;
-import org.bsc.langgraph4j.CompiledGraph;
-import org.bsc.langgraph4j.GraphStateException;
-import org.bsc.langgraph4j.StateGraph;
+import org.bsc.langgraph4j.*;
 import org.bsc.langgraph4j.action.AsyncEdgeAction;
 import org.bsc.langgraph4j.checkpoint.MemorySaver;
 import org.springframework.stereotype.Component;
@@ -41,8 +38,8 @@ public class OpinionWorkflowGraph {
                 .addEdge(START, step(1))
                 .addConditionalEdges(step(1),
                         AsyncEdgeAction.edge_async(state -> {
-                            String type = state.judge();
-                            return type.equals("正面") ? "end" : step(2);
+                            String emotion = state.judge();
+                            return emotion.equals("正面") ? "end" : step(2);
                         }),
                         Map.of(
                                 step(2), step(2),
@@ -51,12 +48,15 @@ public class OpinionWorkflowGraph {
                 )
                 .addEdge(step(2), END);
 
+        MemorySaver saver = new MemorySaver();
         CompileConfig config = CompileConfig.builder()
-                .checkpointSaver(new MemorySaver())
+                .checkpointSaver(saver)
                 .build();
         CompiledGraph<OpinionAgentState> app = workflow.compile(config);
 //        GraphRepresentation plantuml = app.getGraph(GraphRepresentation.Type.PLANTUML, "舆情识别智能体");
 //        log.debug("opinion plantuml: {}", plantuml.content());
-        return app.invoke(Map.of("input", question)).orElse(null);
+        app.setMaxIterations(10);
+        return app.invoke(Map.of("input", question), RunnableConfig.builder().build())
+                .orElse(null);
     }
 }

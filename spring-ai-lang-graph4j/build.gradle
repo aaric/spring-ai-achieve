@@ -12,5 +12,6 @@ dependencies {
 
     implementation "cn.hutool:hutool-all"
 
-    implementation "org.apache.tika:tika-parsers"
+    implementation "org.apache.tika:tika-core"
+    implementation "org.apache.tika:tika-parsers-standard-package"
 }

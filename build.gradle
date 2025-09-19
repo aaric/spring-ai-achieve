@@ -84,7 +84,8 @@ subprojects {
 
             dependency "cn.hutool:hutool-all:5.8.38"
 
-            dependency "org.apache.tika:tika-parsers:3.2.3"
+            dependency "org.apache.tika:tika-core:3.2.3"
+            dependency "org.apache.tika:tika-parsers-standard-package:3.2.3"
 
             dependency "com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.5.0"
 

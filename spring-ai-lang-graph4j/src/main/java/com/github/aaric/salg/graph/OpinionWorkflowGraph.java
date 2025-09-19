@@ -5,6 +5,7 @@ import com.github.aaric.salg.agent.OpinionProcessAgent;
 import com.github.aaric.salg.state.OpinionAgentState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bsc.async.AsyncGenerator;
 import org.bsc.langgraph4j.*;
 import org.bsc.langgraph4j.action.AsyncEdgeAction;
 import org.bsc.langgraph4j.checkpoint.MemorySaver;
@@ -31,7 +32,7 @@ public class OpinionWorkflowGraph {
     private final OpinionJudgeAgent opinionJudgeAgent;
     private final OpinionProcessAgent opinionProcessAgent;
 
-    public OpinionAgentState invoke(String question) throws GraphStateException {
+    private StateGraph<OpinionAgentState> createWorkflowGraph() throws GraphStateException {
         StateGraph<OpinionAgentState> workflow = new StateGraph<>(OpinionAgentState::new)
                 .addNode(step(1), node_async(opinionJudgeAgent))
                 .addNode(step(2), node_async(opinionProcessAgent))
@@ -47,7 +48,11 @@ public class OpinionWorkflowGraph {
                         )
                 )
                 .addEdge(step(2), END);
+        return workflow;
+    }
 
+    public OpinionAgentState invoke(String question) throws GraphStateException {
+        StateGraph<OpinionAgentState> workflow = createWorkflowGraph();
         MemorySaver saver = new MemorySaver();
         CompileConfig config = CompileConfig.builder()
                 .checkpointSaver(saver)
@@ -58,5 +63,19 @@ public class OpinionWorkflowGraph {
         app.setMaxIterations(10);
         return app.invoke(Map.of("input", question), RunnableConfig.builder().build())
                 .orElse(null);
+    }
+
+    public void invokeStream(String question) throws GraphStateException {
+        StateGraph<OpinionAgentState> workflow = createWorkflowGraph();
+        MemorySaver saver = new MemorySaver();
+        CompileConfig config = CompileConfig.builder()
+                .checkpointSaver(saver)
+                .build();
+        CompiledGraph<OpinionAgentState> app = workflow.compile(config);
+        app.setMaxIterations(10);
+        AsyncGenerator<NodeOutput<OpinionAgentState>> stream = app.stream(Map.of("input", question), RunnableConfig.builder().build());
+        stream.forEach(output -> {
+            System.err.printf("%b, %b, %s, %s\n", output.isSTART(), output.isEND(), output.node(), output.state());
+        });
     }
 }

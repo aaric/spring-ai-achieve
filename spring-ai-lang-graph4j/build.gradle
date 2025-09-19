@@ -11,4 +11,6 @@ dependencies {
     implementation "org.bsc.langgraph4j:langgraph4j-langchain4j"
 
     implementation "cn.hutool:hutool-all"
+
+    implementation "org.apache.tika:tika-parsers"
 }

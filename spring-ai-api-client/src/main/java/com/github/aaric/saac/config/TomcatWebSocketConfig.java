@@ -1,6 +1,6 @@
 package com.github.aaric.saac.config;
 
-import com.github.aaric.saac.ws.SimpleWebSocketHandler;
+import com.github.aaric.saac.ws.TomcatWebSocketHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -8,7 +8,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 /**
- * WebSocketConfig
+ * TomcatWebSocketConfig
  *
  * @author Aaric
  * @version 0.21.0-SNAPSHOT
@@ -16,13 +16,13 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @Configuration
 @EnableWebSocket
 @RequiredArgsConstructor
-public class WebSocketConfig implements WebSocketConfigurer {
+public class TomcatWebSocketConfig implements WebSocketConfigurer {
 
-    private final SimpleWebSocketHandler simpleWebSocketHandler;
+    private final TomcatWebSocketHandler tomcatWebSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new SimpleWebSocketHandler(), "/ws/chat")
+        registry.addHandler(tomcatWebSocketHandler, "/ws/chat")
                 .setAllowedOrigins("*");
     }
 }

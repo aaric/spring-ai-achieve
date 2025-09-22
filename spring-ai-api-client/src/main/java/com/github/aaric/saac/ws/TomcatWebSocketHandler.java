@@ -12,13 +12,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * SimpleWebSocketHandler
+ * TomcatWebSocketHandler
  *
  * @author Aaric
  * @version 0.21.0-SNAPSHOT
  */
 @Component
-public class SimpleWebSocketHandler extends TextWebSocketHandler {
+public class TomcatWebSocketHandler extends TextWebSocketHandler {
 
     private static final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 

@@ -1,7 +1,6 @@
 package com.github.aaric.saac.ws;
 
 import cn.hutool.http.HttpUtil;
-import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -17,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Aaric
  * @version 0.21.0-SNAPSHOT
  */
-@Component
+//@Component
 public class TomcatWebSocketHandler extends TextWebSocketHandler {
 
     private static final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
@@ -25,8 +24,7 @@ public class TomcatWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         String sessionId = session.getId();
-        String query = session.getUri().getQuery();
-        String userId = HttpUtil.decodeParamMap(query, StandardCharsets.UTF_8).get("userId");
+        String userId = HttpUtil.decodeParamMap(session.getUri().getQuery(), StandardCharsets.UTF_8).get("userId");
         sessions.put(sessionId, session);
         System.err.println("Session(" + sessionId + "-" + userId + ") is opened.");
     }

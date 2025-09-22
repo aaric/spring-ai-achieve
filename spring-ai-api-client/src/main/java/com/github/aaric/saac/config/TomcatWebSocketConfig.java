@@ -2,8 +2,6 @@ package com.github.aaric.saac.config;
 
 import com.github.aaric.saac.ws.TomcatWebSocketHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
@@ -13,8 +11,8 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
  * @author Aaric
  * @version 0.21.0-SNAPSHOT
  */
-@Configuration
-@EnableWebSocket
+//@Configuration
+//@EnableWebSocket
 @RequiredArgsConstructor
 public class TomcatWebSocketConfig implements WebSocketConfigurer {
 

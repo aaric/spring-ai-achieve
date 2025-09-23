@@ -1,5 +1,6 @@
 package com.github.aaric.salg.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
@@ -9,12 +10,12 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
  * @author Aaric
  * @version 0.22.0-SNAPSHOT
  */
-//@Configuration
+@Configuration
 public class WebFluxConfig implements WebFluxConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/(api|ws)/**")
+        registry.addMapping("/api/**")
                 .allowedOriginPatterns("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                 .allowedHeaders("*")

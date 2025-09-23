@@ -1,11 +1,13 @@
 package com.github.aaric.salg.config;
 
-import com.github.aaric.salg.service.OpinionJudgeService;
-import com.github.aaric.salg.service.OpinionProcessService;
+import com.github.aaric.salg.chat.DefaultChatService;
+import com.github.aaric.salg.chat.OpinionJudgeService;
+import com.github.aaric.salg.chat.OpinionProcessService;
 import com.github.aaric.salg.tool.WeatherTool;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.service.AiServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -97,6 +99,19 @@ public class LangChain4jConfig {
                 .chatMemory(chatMemory)
                 .chatMemoryProvider(messageId -> chatMemory)
                 .tools(weatherTool)
+                .build();
+    }
+
+    @Bean
+    public DefaultChatService defaultChatService(ChatModel chatModel, StreamingChatModel streamingChatModel) {
+        ChatMemory chatMemory = MessageWindowChatMemory.builder()
+                .maxMessages(10)
+                .build();
+        return AiServices.builder(DefaultChatService.class)
+                .chatModel(chatModel)
+                .streamingChatModel(streamingChatModel)
+                .chatMemory(chatMemory)
+                .chatMemoryProvider(messageId -> chatMemory)
                 .build();
     }
 }

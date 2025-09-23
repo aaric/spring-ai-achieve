@@ -1,6 +1,6 @@
 package com.github.aaric.salg.agent;
 
-import com.github.aaric.salg.service.OpinionProcessService;
+import com.github.aaric.salg.chat.OpinionProcessService;
 import com.github.aaric.salg.state.OpinionAgentState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

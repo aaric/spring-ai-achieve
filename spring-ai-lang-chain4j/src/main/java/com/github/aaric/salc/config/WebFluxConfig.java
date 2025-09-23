@@ -27,7 +27,7 @@ public class WebFluxConfig implements WebFluxConfigurer {
         registry.addMapping("/api/**")
 //                .allowedOrigins("http://localhost:8082")
                 .allowedOriginPatterns("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                 .allowedHeaders("*")
                 .exposedHeaders("*")
                 .allowCredentials(true)

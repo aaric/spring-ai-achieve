@@ -12,6 +12,7 @@ dependencies {
     implementation "org.apache.commons:commons-pool2"
 
     implementation "dev.langchain4j:langchain4j-open-ai-spring-boot-starter"
+    implementation "dev.langchain4j:langchain4j-reactor"
     implementation "org.bsc.langgraph4j:langgraph4j-langchain4j"
 
     implementation "cn.hutool:hutool-all"

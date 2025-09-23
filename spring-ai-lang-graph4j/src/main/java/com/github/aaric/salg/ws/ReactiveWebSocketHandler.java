@@ -26,10 +26,13 @@ public class ReactiveWebSocketHandler implements WebSocketHandler {
     public Mono<Void> handle(WebSocketSession session) {
         sessions.put(session.getId(), session);
 
-        System.err.println(session.getHandshakeInfo().getUri());
+        String path = UriComponentsBuilder.fromUri(session.getHandshakeInfo().getUri())
+                .build().getPath();
+        String roomId = path.substring(path.lastIndexOf("/") + 1);
         String userId = UriComponentsBuilder.fromUri(session.getHandshakeInfo().getUri())
                 .build().getQueryParams().getFirst("userId");
-        System.err.println("Session(" + session.getId()/* + "-" + roomId*/ + "-" + userId + ") is opened.");
+
+        System.err.println("Session(" + session.getId() + "-" + roomId + "-" + userId + ") is opened.");
 
         return session.receive()
                 .map(msg -> "ECHO -> " + msg.getPayloadAsText())

@@ -1,6 +1,7 @@
 package com.github.aaric.saac.ws;
 
 import cn.hutool.http.HttpUtil;
+import lombok.SneakyThrows;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -62,7 +63,8 @@ public class TomcatWebSocketHandler extends TextWebSocketHandler {
         });
     }
 
-    public void sendMessage(String sessionId, String message) throws IOException {
+    @SneakyThrows(IOException.class)
+    public void sendMessage(String sessionId, String message) {
         WebSocketSession session = sessions.get(sessionId);
         if (session != null && session.isOpen()) {
             session.sendMessage(new TextMessage(message));

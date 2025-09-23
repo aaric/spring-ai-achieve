@@ -83,7 +83,8 @@ public class UndertowWebSocketEndpoint {
         });
     }
 
-    public void sendMessage(String sessionId, String message) throws IOException {
+    @SneakyThrows(IOException.class)
+    public void sendMessage(String sessionId, String message) {
         Session session = sessions.get(sessionId);
         if (session != null && session.isOpen()) {
             session.getBasicRemote().sendText(message);

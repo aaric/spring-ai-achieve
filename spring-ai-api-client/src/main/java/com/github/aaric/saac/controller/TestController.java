@@ -1,5 +1,6 @@
 package com.github.aaric.saac.controller;
 
+import com.github.aaric.saac.ws.UndertowWebSocketEndpoint;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,10 +24,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TestController {
 
+    private final UndertowWebSocketEndpoint webSocketEndpoint;
+
+
     @Operation(summary = "打招呼", description = "简单测试一下")
     @GetMapping("/say/hello")
-    public String sayHello(@Parameter(description = "会话ID", example = "Nick") @RequestParam String name) {
+    public String sayHello(@Parameter(description = "姓名", example = "Nick") @RequestParam String name) {
         log.info("sayHello -> name={}", name);
         return "Hello, %s!".formatted(name);
+    }
+
+    @Operation(summary = "广播消息", description = "简单测试一下")
+    @GetMapping("/broadcast/message")
+    public Boolean broadcastMessage(@Parameter(description = "消息", example = "Hello World") @RequestParam String msg) {
+        log.info("broadcastMessage -> msg={}", msg);
+        webSocketEndpoint.broadcastMessage(msg);
+        return true;
     }
 }

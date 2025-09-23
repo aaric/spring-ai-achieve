@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aaric.salg.graph.OpinionWorkflowGraph;
 import com.github.aaric.salg.log.LlmLog;
 import com.github.aaric.salg.util.RequestIdUtil;
+import com.github.aaric.salg.ws.ReactiveWebSocketHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,6 +43,8 @@ public class TestController {
     private final OpinionWorkflowGraph opinionWorkflowGraph;
 
     private final StringRedisTemplate stringRedisTemplate;
+
+    private final ReactiveWebSocketHandler webSocketHandler;
 
     @Operation(summary = "测试舆情识别工作流", description = "简单测试一下")
     @GetMapping("/workflow/opinion")
@@ -82,5 +85,13 @@ public class TestController {
             }
         }
         return Mono.just(llmLogList);
+    }
+
+    @Operation(summary = "广播消息", description = "简单测试一下")
+    @GetMapping("/broadcast/message")
+    public Mono<Boolean> broadcastMessage(@Parameter(description = "消息", example = "Hello World") @RequestParam String msg) {
+        log.info("broadcastMessage -> msg={}", msg);
+        webSocketHandler.broadcastMessage(msg);
+        return Mono.just(true);
     }
 }

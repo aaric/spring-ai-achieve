@@ -24,7 +24,7 @@ public class ReactiveWebSocketConfig {
     @Bean
     public HandlerMapping webSocketHandlerMapping(ReactiveWebSocketHandler reactiveWebSocketHandler) {
         Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("/ws/chat", reactiveWebSocketHandler);
+        map.put("/ws/chat/{roomId}", reactiveWebSocketHandler);
 
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
         mapping.setOrder(Ordered.HIGHEST_PRECEDENCE);

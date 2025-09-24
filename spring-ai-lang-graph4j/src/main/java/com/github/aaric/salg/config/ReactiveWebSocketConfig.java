@@ -1,5 +1,6 @@
 package com.github.aaric.salg.config;
 
+import com.github.aaric.salg.ws.OpinionWebSocketHandler;
 import com.github.aaric.salg.ws.ReactiveWebSocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,9 +23,11 @@ import java.util.Map;
 public class ReactiveWebSocketConfig {
 
     @Bean
-    public HandlerMapping webSocketHandlerMapping(ReactiveWebSocketHandler reactiveWebSocketHandler) {
+    public HandlerMapping webSocketHandlerMapping(ReactiveWebSocketHandler reactiveWebSocketHandler,
+                                                  OpinionWebSocketHandler opinionWebSocketHandler) {
         Map<String, WebSocketHandler> map = new HashMap<>();
         map.put("/ws/chat/{roomId}", reactiveWebSocketHandler);
+        map.put("/ws/opinion/agent", opinionWebSocketHandler);
 
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
         mapping.setOrder(Ordered.HIGHEST_PRECEDENCE);

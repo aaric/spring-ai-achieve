@@ -1,5 +1,6 @@
 package com.github.aaric.salg.listener;
 
+import com.github.aaric.salg.ws.OpinionWebSocketHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
@@ -21,6 +22,8 @@ public class RedisLogMessageListener implements MessageListener {
 
     private final StringRedisTemplate stringRedisTemplate;
 
+    private final OpinionWebSocketHandler opinionWebSocketHandler;
+
     @Override
     public void onMessage(Message message, byte[] pattern) {
         String channel = new String(message.getChannel());
@@ -30,5 +33,8 @@ public class RedisLogMessageListener implements MessageListener {
         // 处理消息
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
         listOperations.rightPush(channel, body);
+
+        // 发送WebSocket广播消息
+        opinionWebSocketHandler.broadcastMessage(body);
     }
 }

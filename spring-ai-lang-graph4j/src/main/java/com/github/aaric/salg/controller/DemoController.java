@@ -1,9 +1,8 @@
 package com.github.aaric.salg.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aaric.salg.chat.DefaultChatService;
 import com.github.aaric.salg.graph.OpinionWorkflowGraph;
-import com.github.aaric.salg.ws.ReactiveWebSocketHandler;
+import com.github.aaric.salg.util.RequestIdUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.Tika;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
@@ -39,19 +37,13 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class DemoController {
 
-    private final ObjectMapper objectMapper;
-
     private final DefaultChatService defaultChatService;
 
     private final OpinionWorkflowGraph opinionWorkflowGraph;
 
-    private final StringRedisTemplate stringRedisTemplate;
-
-    private final ReactiveWebSocketHandler webSocketHandler;
-
+    @Schema(description = "请求响应消息体")
     @Data
     @Accessors(chain = true)
-    @Schema(description = "请求响应消息体")
     public static class ResultMsg<T> {
         @Schema(description = "消息状态：0-成功，其他失败")
         private int code = 0;
@@ -69,7 +61,7 @@ public class DemoController {
         }
     }
 
-    @Operation(summary = "登录接口", description = "简单测试一下")
+    @Operation(summary = "模拟登录接口", description = "简单测试一下")
     @GetMapping("/fake/login")
     public Mono<ResultMsg<String>> fakeLogin(@Parameter(description = "用户名", example = "admin") @RequestParam String username,
                                              @Parameter(description = "密码", example = "admin") @RequestParam String password) {
@@ -90,7 +82,7 @@ public class DemoController {
                 .map(chunk -> ServerSentEvent.<String>builder().data(chunk).build());
     }
 
-    @Operation(summary = "协议文档上传接口", description = "简单测试一下")
+    @Operation(summary = "协议内容提取接口", description = "简单测试一下")
     @PostMapping("/protocol/upload")
     public Mono<ResultMsg<String>> protocolUpload(@Parameter(description = "文件") @RequestPart("file") FilePart file) {
         log.info("protocolUpload -> file={}", file.filename());
@@ -116,9 +108,13 @@ public class DemoController {
 
     @Operation(summary = "协议智能体调用接口", description = "简单测试一下")
     @PostMapping("/protocol/agent")
-    public Mono<ResultMsg<String>> protocolAgent(@Parameter(description = "协议文档内容") @RequestBody ProtocolRequest body) {
-        log.info("protocolAgent -> content={}", body.getContent());
+    public Mono<ResultMsg<String>> protocolAgent(@Parameter(description = "协议文档内容") @RequestBody ProtocolRequest body) throws Exception {
+        //String requestId = RequestIdUtil.get();
+        String requestId = "123";
+        log.info("workflowOpinion -> requestId={}, content={}, ", requestId, body.getContent());
+        opinionWorkflowGraph.invokeStream(body.getContent(), requestId);
+        RequestIdUtil.remove();
         // 返回任务ID
-        return Mono.just(ResultMsg.ok("Hello world"));
+        return Mono.just(ResultMsg.ok("任务ID：" + requestId));
     }
 }

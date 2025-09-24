@@ -3,6 +3,7 @@ package com.github.aaric.salg.graph;
 import com.github.aaric.salg.agent.OpinionJudgeAgent;
 import com.github.aaric.salg.agent.OpinionProcessAgent;
 import com.github.aaric.salg.state.OpinionAgentState;
+import com.github.aaric.salg.ws.OpinionWebSocketHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bsc.async.AsyncGenerator;
@@ -31,6 +32,8 @@ public class OpinionWorkflowGraph {
 
     private final OpinionJudgeAgent opinionJudgeAgent;
     private final OpinionProcessAgent opinionProcessAgent;
+
+    private final OpinionWebSocketHandler opinionWebSocketHandler;
 
     private StateGraph<OpinionAgentState> createWorkflowGraph() throws GraphStateException {
         StateGraph<OpinionAgentState> workflow = new StateGraph<>(OpinionAgentState::new)
@@ -65,7 +68,7 @@ public class OpinionWorkflowGraph {
                 .orElse(null);
     }
 
-    public void invokeStream(String question) throws GraphStateException {
+    private AsyncGenerator<NodeOutput<OpinionAgentState>> createOutputStream(String question) throws GraphStateException {
         StateGraph<OpinionAgentState> workflow = createWorkflowGraph();
         MemorySaver saver = new MemorySaver();
         CompileConfig config = CompileConfig.builder()
@@ -73,9 +76,21 @@ public class OpinionWorkflowGraph {
                 .build();
         CompiledGraph<OpinionAgentState> app = workflow.compile(config);
         app.setMaxIterations(10);
-        AsyncGenerator<NodeOutput<OpinionAgentState>> stream = app.stream(Map.of("input", question), RunnableConfig.builder().build());
+        return app.stream(Map.of("input", question), RunnableConfig.builder().build());
+    }
+
+    public void invokeStream(String question) throws GraphStateException {
+        AsyncGenerator<NodeOutput<OpinionAgentState>> stream = createOutputStream(question);
         stream.forEach(output -> {
             System.err.printf("%b, %b, %s, %s\n", output.isSTART(), output.isEND(), output.node(), output.state());
+        });
+    }
+
+    public void invokeStream(String question, String requestId) throws GraphStateException {
+        AsyncGenerator<NodeOutput<OpinionAgentState>> stream = createOutputStream(question);
+        stream.forEach(output -> {
+            String message = "%b, %b, %s, %s".formatted(output.isSTART(), output.isEND(), output.node(), output.state());
+            opinionWebSocketHandler.sendMessage(requestId, message);
         });
     }
 }

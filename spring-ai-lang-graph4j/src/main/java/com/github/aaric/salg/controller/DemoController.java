@@ -102,6 +102,8 @@ public class DemoController {
     @Schema(description = "协议请求数据")
     @Data
     public static class ProtocolRequest {
+        @Schema(description = "聊天室ID")
+        private String chatId;
         @Schema(description = "协议内容")
         private String content;
     }
@@ -109,10 +111,9 @@ public class DemoController {
     @Operation(summary = "协议智能体调用接口", description = "简单测试一下")
     @PostMapping("/protocol/agent")
     public Mono<ResultMsg<String>> protocolAgent(@Parameter(description = "协议文档内容") @RequestBody ProtocolRequest body) throws Exception {
-        //String requestId = RequestIdUtil.get();
-        String requestId = "123";
-        log.info("workflowOpinion -> requestId={}, content={}, ", requestId, body.getContent());
-        opinionWorkflowGraph.invokeStream(body.getContent(), requestId);
+        String requestId = RequestIdUtil.get();
+        log.info("workflowOpinion -> chatId={}, content={}, ", body.getChatId(), body.getContent());
+        opinionWorkflowGraph.invokeStream(body.getContent(), body.getChatId(), requestId);
         RequestIdUtil.remove();
         // 返回任务ID
         return Mono.just(ResultMsg.ok("任务ID：" + requestId));

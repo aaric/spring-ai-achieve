@@ -24,7 +24,7 @@ public class LlmLog {
 
     private String requestId;
 
-    private String agentName;
+    private String nodeName;
 
     private String systemPrompt;
 
@@ -37,6 +37,7 @@ public class LlmLog {
     private String exception;
 
     public LlmLog(String requestId, String systemPrompt, String userPrompt, String output, String toolJson) {
+        this.id = Instant.now().toEpochMilli();
         this.requestId = requestId;
         this.systemPrompt = systemPrompt;
         this.userPrompt = userPrompt;
@@ -45,6 +46,7 @@ public class LlmLog {
     }
 
     public LlmLog(String requestId, String systemPrompt, String userPrompt, String exception) {
+        this.id = Instant.now().toEpochMilli();
         this.requestId = requestId;
         this.systemPrompt = systemPrompt;
         this.userPrompt = userPrompt;
@@ -52,13 +54,12 @@ public class LlmLog {
     }
 
     public void setAgentName() {
-        this.id = Instant.now().toEpochMilli();
         if (StringUtils.startsWithIgnoreCase(systemPrompt, "你是一个舆情识别专家")) {
-            this.agentName = "judge";
+            this.nodeName = "judge";
         } else if (StringUtils.startsWithIgnoreCase(systemPrompt, "你是一个舆情处理专家")) {
-            this.agentName = "process";
+            this.nodeName = "process";
         } else {
-            this.agentName = "unknown";
+            this.nodeName = "unknown";
         }
     }
 }

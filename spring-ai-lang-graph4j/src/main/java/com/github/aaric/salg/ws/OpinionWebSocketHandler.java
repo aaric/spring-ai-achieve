@@ -24,12 +24,12 @@ public class OpinionWebSocketHandler implements WebSocketHandler {
 
     @Override
     public Mono<Void> handle(WebSocketSession session) {
-        String requestId = UriComponentsBuilder.fromUri(session.getHandshakeInfo().getUri())
-                .build().getQueryParams().getFirst("requestId");
+        String chatId = UriComponentsBuilder.fromUri(session.getHandshakeInfo().getUri())
+                .build().getQueryParams().getFirst("chatId");
 
-        sessions.put(requestId, session);
+        sessions.put(chatId, session);
 
-        System.err.println("Session(" + requestId + ") is opened.");
+        System.err.println("Session(" + chatId + ") is opened.");
 
         return session.receive()
                 .map(msg -> "ECHO -> " + msg.getPayloadAsText())
@@ -48,8 +48,8 @@ public class OpinionWebSocketHandler implements WebSocketHandler {
         });
     }
 
-    public void sendMessage(String requestId, String message) {
-        WebSocketSession session = sessions.get(requestId);
+    public void sendMessage(String chatId, String message) {
+        WebSocketSession session = sessions.get(chatId);
         if (session != null) {
             session.send(Mono.just(session.textMessage(message))).subscribe();
         }

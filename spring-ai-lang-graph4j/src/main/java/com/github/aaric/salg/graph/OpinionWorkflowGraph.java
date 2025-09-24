@@ -1,7 +1,10 @@
 package com.github.aaric.salg.graph;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aaric.salg.agent.OpinionJudgeAgent;
 import com.github.aaric.salg.agent.OpinionProcessAgent;
+import com.github.aaric.salg.log.NodeLog;
 import com.github.aaric.salg.state.OpinionAgentState;
 import com.github.aaric.salg.ws.OpinionWebSocketHandler;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,7 @@ import org.bsc.async.AsyncGenerator;
 import org.bsc.langgraph4j.*;
 import org.bsc.langgraph4j.action.AsyncEdgeAction;
 import org.bsc.langgraph4j.checkpoint.MemorySaver;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -29,6 +33,9 @@ import static org.bsc.langgraph4j.action.AsyncNodeAction.node_async;
 @Component
 @RequiredArgsConstructor
 public class OpinionWorkflowGraph {
+
+    private final ObjectMapper objectMapper;
+    private final StringRedisTemplate stringRedisTemplate;
 
     private final OpinionJudgeAgent opinionJudgeAgent;
     private final OpinionProcessAgent opinionProcessAgent;
@@ -86,11 +93,26 @@ public class OpinionWorkflowGraph {
         });
     }
 
-    public void invokeStream(String question, String requestId) throws GraphStateException {
+    public void invokeStream(String question, String chatId, String requestId) throws GraphStateException {
         AsyncGenerator<NodeOutput<OpinionAgentState>> stream = createOutputStream(question);
         stream.forEach(output -> {
-            String message = "%b, %b, %s, %s".formatted(output.isSTART(), output.isEND(), output.node(), output.state());
-            opinionWebSocketHandler.sendMessage(requestId, message);
+            // 节点日志
+            NodeLog nodeLog = new NodeLog(requestId);
+            if (output.isSTART()) {
+                nodeLog.setMessage("流程开始");
+            } else if (output.isEND()) {
+                nodeLog.setMessage("流程结束");
+            } else {
+                nodeLog.setNodeName(output.node());
+                nodeLog.setMessage("%s开始工作".formatted(nodeLog.getNodeName()));
+            }
+
+            // 发送日志消息
+            try {
+                opinionWebSocketHandler.sendMessage(chatId, objectMapper.writeValueAsString(nodeLog));
+            } catch (JsonProcessingException e) {
+                log.error("json error", e);
+            }
         });
     }
 }

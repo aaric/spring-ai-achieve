@@ -116,6 +116,6 @@ public class DemoController {
         opinionWorkflowGraph.invokeStream(body.getContent(), body.getChatId(), requestId);
         RequestIdUtil.remove();
         // 返回任务ID
-        return Mono.just(ResultMsg.ok("任务ID：" + requestId));
+        return Mono.just(ResultMsg.ok(requestId));
     }
 }

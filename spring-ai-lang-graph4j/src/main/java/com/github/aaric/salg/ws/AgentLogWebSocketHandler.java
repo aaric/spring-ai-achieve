@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 @Component
-public class OpinionWebSocketHandler implements WebSocketHandler {
+public class AgentLogWebSocketHandler implements WebSocketHandler {
 
     private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 
@@ -39,11 +39,11 @@ public class OpinionWebSocketHandler implements WebSocketHandler {
     }
 
     public void broadcastMessage(String message) {
-        sessions.forEach((requestId, session) -> {
+        sessions.forEach((chatId, session) -> {
             try {
                 session.send(Mono.just(session.textMessage(message))).subscribe();
             } catch (Exception e) {
-                System.err.println("Session(" + requestId + ") is error.");
+                System.err.println("Session(" + chatId + ") is error.");
             }
         });
     }

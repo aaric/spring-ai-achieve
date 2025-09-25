@@ -6,9 +6,11 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -46,8 +48,10 @@ public class TomcatWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String sessionId = session.getId();
+        String chatId = UriComponentsBuilder.fromUri(Objects.requireNonNull(session.getUri()))
+                .build().getQueryParams().getFirst("chatId");
         String playload = message.getPayload();
-        System.err.println("Session(" + sessionId + ") is received: " + playload);
+        System.err.println("Session(" + sessionId + "-" + chatId + ") is received: " + playload);
         session.sendMessage(new TextMessage("ECHO -> " + playload));
     }
 

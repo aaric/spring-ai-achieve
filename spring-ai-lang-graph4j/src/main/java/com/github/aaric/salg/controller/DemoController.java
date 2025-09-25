@@ -25,7 +25,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 /**
- * 测试模块API控制器
+ * 示例模块API控制器
  *
  * @author Aaric
  * @version 0.22.0-SNAPSHOT
@@ -112,8 +112,9 @@ public class DemoController {
     @PostMapping("/protocol/agent")
     public Mono<ResultMsg<String>> protocolAgent(@Parameter(description = "协议文档内容") @RequestBody ProtocolRequest body) throws Exception {
         String requestId = RequestIdUtil.get();
-        log.info("workflowOpinion -> chatId={}, content={}, ", body.getChatId(), body.getContent());
-        opinionWorkflowGraph.invokeStream(body.getContent(), body.getChatId(), requestId);
+        log.info("protocolAgent -> chatId={}, content={}, ", body.getChatId(), body.getContent());
+//        opinionWorkflowGraph.invokeStream(body.getContent(), body.getChatId(), requestId);
+        opinionWorkflowGraph.invoke(body.getContent());
         RequestIdUtil.remove();
         // 返回任务ID
         return Mono.just(ResultMsg.ok(requestId));

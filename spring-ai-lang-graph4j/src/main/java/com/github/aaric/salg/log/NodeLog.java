@@ -12,6 +12,7 @@ import java.time.Instant;
  * @author Aaric
  * @version 0.22.0-SNAPSHOT
  */
+@Deprecated
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -6,7 +6,7 @@ import com.github.aaric.salg.agent.OpinionJudgeAgent;
 import com.github.aaric.salg.agent.OpinionProcessAgent;
 import com.github.aaric.salg.log.NodeLog;
 import com.github.aaric.salg.state.OpinionAgentState;
-import com.github.aaric.salg.ws.OpinionWebSocketHandler;
+import com.github.aaric.salg.ws.AgentLogWebSocketHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bsc.async.AsyncGenerator;
@@ -40,7 +40,7 @@ public class OpinionWorkflowGraph {
     private final OpinionJudgeAgent opinionJudgeAgent;
     private final OpinionProcessAgent opinionProcessAgent;
 
-    private final OpinionWebSocketHandler opinionWebSocketHandler;
+    private final AgentLogWebSocketHandler opinionWebSocketHandler;
 
     private StateGraph<OpinionAgentState> createWorkflowGraph() throws GraphStateException {
         StateGraph<OpinionAgentState> workflow = new StateGraph<>(OpinionAgentState::new)

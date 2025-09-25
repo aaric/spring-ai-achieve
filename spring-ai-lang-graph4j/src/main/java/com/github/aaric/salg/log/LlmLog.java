@@ -53,7 +53,7 @@ public class LlmLog {
         this.exception = exception;
     }
 
-    public void setAgentName() {
+    public void setNodeName() {
         if (StringUtils.startsWithIgnoreCase(systemPrompt, "你是一个舆情识别专家")) {
             this.nodeName = "judge";
         } else if (StringUtils.startsWithIgnoreCase(systemPrompt, "你是一个舆情处理专家")) {
@@ -61,5 +61,20 @@ public class LlmLog {
         } else {
             this.nodeName = "unknown";
         }
+    }
+
+    public String getNodeMessage() {
+        String message = null;
+        switch (this.nodeName) {
+            case "judge":
+                message = "%s节点开始开始评估舆情".formatted(this.nodeName);
+                break;
+            case "process":
+                message = "%s节点提供建议".formatted(this.nodeName);
+                break;
+            default:
+                break;
+        }
+        return message;
     }
 }

@@ -67,7 +67,7 @@ public class LlmLog {
         String message = null;
         switch (this.nodeName) {
             case "judge":
-                message = "%s节点开始开始评估舆情".formatted(this.nodeName);
+                message = "%s节点正在评估舆情".formatted(this.nodeName);
                 break;
             case "process":
                 message = "%s节点提供建议".formatted(this.nodeName);

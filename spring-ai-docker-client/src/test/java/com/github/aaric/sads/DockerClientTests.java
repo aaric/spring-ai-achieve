@@ -117,7 +117,7 @@ public class DockerClientTests {
                 .exec(new ResultCallback.Adapter<Frame>() {
                     @Override
                     public void onNext(Frame frame) {
-                        System.out.println(new String(frame.getPayload()));
+                        System.err.println(new String(frame.getPayload()));
                     }
 
                     @Override
@@ -127,7 +127,7 @@ public class DockerClientTests {
 
                     @Override
                     public void onComplete() {
-                        System.out.println("日志读取完成");
+                        System.err.println("日志读取完成");
                     }
                 })
                 .awaitCompletion(10, TimeUnit.SECONDS);

@@ -39,7 +39,20 @@ public class DynamicSchedulerServiceImpl implements DynamicSchedulerService {
         if (CollectionUtils.isEmpty(taskMap)) {
             return null;
         }
-        return taskMap.get(taskId).state().name();
+//        return taskMap.get(taskId).state().name();
+        ScheduledFuture<?> future = taskMap.get(taskId);
+        if (future == null) {
+            return null;
+        }
+        String stateName = null;
+        if (future.isCancelled()) {
+            stateName = "CANCELLED";
+        } else if (future.isDone()) {
+            stateName = "DONE";
+        } else {
+            stateName = "RUNNING";
+        }
+        return stateName;
     }
 
     @Override

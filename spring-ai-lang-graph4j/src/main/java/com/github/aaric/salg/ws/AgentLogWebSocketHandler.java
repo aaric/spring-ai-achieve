@@ -20,14 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class AgentLogWebSocketHandler implements WebSocketHandler {
 
-    private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
+    private final Map<String, WebSocketSession> SESSIONS = new ConcurrentHashMap<>();
 
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         String chatId = UriComponentsBuilder.fromUri(session.getHandshakeInfo().getUri())
                 .build().getQueryParams().getFirst("chatId");
 
-        sessions.put(chatId, session);
+        SESSIONS.put(chatId, session);
 
         System.err.println("Session(" + chatId + ") is opened.");
 
@@ -39,7 +39,7 @@ public class AgentLogWebSocketHandler implements WebSocketHandler {
     }
 
     public void broadcastMessage(String message) {
-        sessions.forEach((chatId, session) -> {
+        SESSIONS.forEach((chatId, session) -> {
             try {
                 session.send(Mono.just(session.textMessage(message))).subscribe();
             } catch (Exception e) {
@@ -49,7 +49,7 @@ public class AgentLogWebSocketHandler implements WebSocketHandler {
     }
 
     public void sendMessage(String chatId, String message) {
-        WebSocketSession session = sessions.get(chatId);
+        WebSocketSession session = SESSIONS.get(chatId);
         if (session != null) {
             session.send(Mono.just(session.textMessage(message))).subscribe();
         }

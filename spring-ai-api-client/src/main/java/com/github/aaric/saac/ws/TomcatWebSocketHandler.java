@@ -22,20 +22,20 @@ import java.util.concurrent.ConcurrentHashMap;
 //@Component
 public class TomcatWebSocketHandler extends TextWebSocketHandler {
 
-    private static final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, WebSocketSession> SESSIONS = new ConcurrentHashMap<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         String sessionId = session.getId();
         String userId = HttpUtil.decodeParamMap(session.getUri().getQuery(), StandardCharsets.UTF_8).get("userId");
-        sessions.put(sessionId, session);
+        SESSIONS.put(sessionId, session);
         System.err.println("Session(" + sessionId + "-" + userId + ") is opened.");
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         String sessionId = session.getId();
-        sessions.remove(sessionId);
+        SESSIONS.remove(sessionId);
         System.err.println("Session(" + sessionId + ") is closed.");
     }
 
@@ -56,7 +56,7 @@ public class TomcatWebSocketHandler extends TextWebSocketHandler {
     }
 
     public void broadcastMessage(String message) {
-        sessions.forEach((sessionId, session) -> {
+        SESSIONS.forEach((sessionId, session) -> {
             try {
                 if (session.isOpen()) {
                     session.sendMessage(new TextMessage(message));
@@ -69,7 +69,7 @@ public class TomcatWebSocketHandler extends TextWebSocketHandler {
 
     @SneakyThrows(IOException.class)
     public void sendMessage(String sessionId, String message) {
-        WebSocketSession session = sessions.get(sessionId);
+        WebSocketSession session = SESSIONS.get(sessionId);
         if (session != null && session.isOpen()) {
             session.sendMessage(new TextMessage(message));
         }

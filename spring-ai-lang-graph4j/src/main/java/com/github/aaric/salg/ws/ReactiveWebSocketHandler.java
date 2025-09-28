@@ -20,11 +20,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class ReactiveWebSocketHandler implements WebSocketHandler {
 
-    private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
+    private final Map<String, WebSocketSession> SESSIONS = new ConcurrentHashMap<>();
 
     @Override
     public Mono<Void> handle(WebSocketSession session) {
-        sessions.put(session.getId(), session);
+        SESSIONS.put(session.getId(), session);
 
         String path = UriComponentsBuilder.fromUri(session.getHandshakeInfo().getUri())
                 .build().getPath();
@@ -42,7 +42,7 @@ public class ReactiveWebSocketHandler implements WebSocketHandler {
     }
 
     public void broadcastMessage(String message) {
-        sessions.forEach((sessionId, session) -> {
+        SESSIONS.forEach((sessionId, session) -> {
             try {
                 session.send(Mono.just(session.textMessage(message))).subscribe();
             } catch (Exception e) {
@@ -52,7 +52,7 @@ public class ReactiveWebSocketHandler implements WebSocketHandler {
     }
 
     public void sendMessage(String sessionId, String message) {
-        WebSocketSession session = sessions.get(sessionId);
+        WebSocketSession session = SESSIONS.get(sessionId);
         if (session != null) {
             session.send(Mono.just(session.textMessage(message))).subscribe();
         }

@@ -38,21 +38,21 @@ public class UndertowWebSocketEndpoint {
         }
     }
 
-    private static final ConcurrentHashMap<String, Session> sessions = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Session> SESSIONS = new ConcurrentHashMap<>();
 
     @OnOpen
     public void onOpen(Session session, @PathParam("roomId") String roomId) {
         String sessionId = session.getId();
 //        String userId = HttpUtil.decodeParamMap(session.getQueryString(), StandardCharsets.UTF_8).get("userId");
         String userId = (String) session.getUserProperties().get("userId");
-        sessions.put(sessionId, session);
+        SESSIONS.put(sessionId, session);
         System.err.println("Session(" + sessionId + "-" + roomId + "-" + userId + ") is opened.");
     }
 
     @OnClose
     public void onClose(Session session) {
         String sessionId = session.getId();
-        sessions.remove(sessionId);
+        SESSIONS.remove(sessionId);
         System.err.println("Session(" + sessionId + ") is closed.");
     }
 
@@ -72,7 +72,7 @@ public class UndertowWebSocketEndpoint {
 
     @SneakyThrows
     public void broadcastMessage(String message) {
-        sessions.forEach((sessionId, session) -> {
+        SESSIONS.forEach((sessionId, session) -> {
             try {
                 if (session.isOpen()) {
                     session.getBasicRemote().sendText(message);
@@ -85,7 +85,7 @@ public class UndertowWebSocketEndpoint {
 
     @SneakyThrows(IOException.class)
     public void sendMessage(String sessionId, String message) {
-        Session session = sessions.get(sessionId);
+        Session session = SESSIONS.get(sessionId);
         if (session != null && session.isOpen()) {
             session.getBasicRemote().sendText(message);
         }

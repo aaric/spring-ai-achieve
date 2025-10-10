@@ -7,6 +7,7 @@ import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import dev.langchain4j.service.guardrail.InputGuardrails;
+import dev.langchain4j.service.memory.ChatMemoryAccess;
 import reactor.core.publisher.Flux;
 
 /**
@@ -17,7 +18,7 @@ import reactor.core.publisher.Flux;
  */
 //@AiService
 @InputGuardrails({CustomInputGuardrail.class})
-public interface TestChatService {
+public interface TestChatService extends ChatMemoryAccess {
 
     @SystemMessage("你是一个笑话大王。")
     String chatOne(String question);

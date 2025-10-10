@@ -2,6 +2,7 @@ package com.github.aaric.salc.chat;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.ReflectUtil;
+import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * TestChatServiceTests
@@ -47,6 +49,13 @@ public class TestChatServiceTests {
         log.debug(result);
         result = testChatService.chatThree(2, "你好，我是谁来着？");
         log.debug(result);
+
+        List<ChatMessage> messageList = testChatService.getChatMemory(1).messages();
+        for (ChatMessage message : messageList) {
+            System.err.println(message);
+        }
+
+        System.err.println(testChatService.evictChatMemory(2));
     }
 
     @Test

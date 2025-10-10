@@ -1,7 +1,6 @@
 package com.github.aaric.salc.config;
 
 import com.github.aaric.salc.chat.TestChatService;
-import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
@@ -48,15 +47,15 @@ public class LangChain4jConfig {
     public TestChatService testChatService(ChatModel chatModel, StreamingChatModel streamingChatModel) {
 //        return AiServices.create(TestChatService.class, chatModel);
 //        ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
-        ChatMemory chatMemory = MessageWindowChatMemory.builder()
-                .maxMessages(10)
-//                .chatMemoryStore(null)
-                .build();
+//        ChatMemory chatMemory = MessageWindowChatMemory.builder()
+//                .maxMessages(10)
+////                .chatMemoryStore(null)
+//                .build();
         return AiServices.builder(TestChatService.class)
                 .chatModel(chatModel)
                 .streamingChatModel(streamingChatModel)
-                .chatMemory(chatMemory)
-                .chatMemoryProvider(messageId -> chatMemory)
+//                .chatMemory(chatMemory)
+                .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
 //                .contentRetriever(null)
 //                .toolProvider(mcpToolProvider())
                 .build();

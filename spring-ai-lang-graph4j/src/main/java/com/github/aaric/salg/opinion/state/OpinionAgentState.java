@@ -1,4 +1,4 @@
-package com.github.aaric.salg.state;
+package com.github.aaric.salg.opinion.state;
 
 import org.bsc.langgraph4j.state.AgentState;
 import org.bsc.langgraph4j.state.Channel;

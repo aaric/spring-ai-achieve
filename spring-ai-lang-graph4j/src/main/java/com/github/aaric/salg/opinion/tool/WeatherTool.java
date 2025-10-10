@@ -1,4 +1,4 @@
-package com.github.aaric.salg.tool;
+package com.github.aaric.salg.opinion.tool;
 
 import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;

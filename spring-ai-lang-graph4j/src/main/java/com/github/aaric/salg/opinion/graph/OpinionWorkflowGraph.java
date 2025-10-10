@@ -1,11 +1,11 @@
-package com.github.aaric.salg.graph;
+package com.github.aaric.salg.opinion.graph;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.aaric.salg.agent.OpinionJudgeAgent;
-import com.github.aaric.salg.agent.OpinionProcessAgent;
+import com.github.aaric.salg.opinion.agent.OpinionJudgeAgent;
+import com.github.aaric.salg.opinion.agent.OpinionProcessAgent;
 import com.github.aaric.salg.log.NodeLog;
-import com.github.aaric.salg.state.OpinionAgentState;
+import com.github.aaric.salg.opinion.state.OpinionAgentState;
 import com.github.aaric.salg.ws.AgentLogWebSocketHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static com.github.aaric.salg.state.OpinionAgentState.step;
+import static com.github.aaric.salg.opinion.state.OpinionAgentState.step;
 import static org.bsc.langgraph4j.StateGraph.END;
 import static org.bsc.langgraph4j.StateGraph.START;
 import static org.bsc.langgraph4j.action.AsyncNodeAction.node_async;

@@ -1,9 +1,7 @@
 package com.github.aaric.salg.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.aaric.salg.graph.OpinionWorkflowGraph;
 import com.github.aaric.salg.log.LlmLog;
-import com.github.aaric.salg.util.RequestIdUtil;
 import com.github.aaric.salg.ws.ReactiveWebSocketHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,7 +20,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -31,7 +28,7 @@ import java.util.Objects;
  * @author Aaric
  * @version 0.20.0-SNAPSHOT
  */
-@Tag(name = "测试模块API", description = "测试学习示例相关操作")
+@Tag(name = "测试模块API", description = "简单测试一下")
 @RequestMapping("/api/test")
 @RestController
 @Slf4j
@@ -40,22 +37,9 @@ public class TestController {
 
     private final ObjectMapper objectMapper;
 
-    private final OpinionWorkflowGraph opinionWorkflowGraph;
-
     private final StringRedisTemplate stringRedisTemplate;
 
     private final ReactiveWebSocketHandler webSocketHandler;
-
-    @Operation(summary = "测试舆情识别工作流", description = "简单测试一下")
-    @GetMapping("/workflow/opinion")
-    public Mono<Map<String, Object>> workflowOpinion(@Parameter(description = "用户提问", example = "无聊") @RequestParam String question) throws Exception {
-        //HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String requestId = RequestIdUtil.get();
-        log.info("workflowOpinion -> question={}, requestId={}", question, requestId);
-        Mono<Map<String, Object>> result = Mono.just(opinionWorkflowGraph.invoke(question).data());
-        RequestIdUtil.remove();
-        return result;
-    }
 
     @Operation(summary = "查询日志列表", description = "简单测试一下")
     @GetMapping("/log/list")

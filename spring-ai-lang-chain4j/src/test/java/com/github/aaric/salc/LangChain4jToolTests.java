@@ -31,7 +31,7 @@ public class LangChain4jToolTests {
     private TestToolService testToolService;
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         testToolService = AiServices.builder(TestToolService.class)
                 .chatModel(chatModel)
                 .tools(new MathTool())

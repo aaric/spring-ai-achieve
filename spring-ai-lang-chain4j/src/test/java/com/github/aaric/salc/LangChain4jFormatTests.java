@@ -7,8 +7,11 @@ import dev.langchain4j.model.chat.request.ResponseFormat;
 import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
 import dev.langchain4j.model.chat.request.json.JsonSchema;
 import dev.langchain4j.model.chat.response.ChatResponse;
+import dev.langchain4j.model.output.structured.Description;
+import dev.langchain4j.service.AiServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,15 @@ import java.util.List;
 public class LangChain4jFormatTests {
 
     private final ChatModel chatModel;
+
+    private TestFormatService testFormatService;
+
+    @BeforeEach
+    public void setUp() {
+        testFormatService = AiServices.builder(TestFormatService.class)
+                .chatModel(chatModel)
+                .build();
+    }
 
     @Test
     public void testFormatPerson() {
@@ -59,5 +71,26 @@ public class LangChain4jFormatTests {
                 .build();
         ChatResponse chatResponse = chatModel.chat(chatRequest);
         System.err.println(chatResponse.aiMessage().text());
+    }
+
+    @Test
+    public void testFormatPersonObject() {
+        Person p1 = testFormatService.chat("""
+                Nick is 24 years young and lives an independent life.
+                He stands 1.88 meters tall and carries himself with confidence.
+                Currently unmarried, he enjoys the freedom to focus on his personal goals and interests.
+                """);
+        System.err.println(p1);
+    }
+
+    @Description("A person")
+    public record Person(@Description("The name of the person") String name,
+                  @Description("The age of the person") int age,
+                  @Description("The height of the person") double height,
+                  @Description("Whether the person is married") boolean married) {
+    }
+
+    public interface TestFormatService {
+        Person chat(String question);
     }
 }

@@ -75,7 +75,7 @@ public class LangChain4jFormatTests {
 
     @Test
     public void testFormatPersonObject() {
-        Person p1 = testFormatService.chat("""
+        Person p1 = testFormatService.chat1("""
                 Nick is 24 years young and lives an independent life.
                 He stands 1.88 meters tall and carries himself with confidence.
                 Currently unmarried, he enjoys the freedom to focus on his personal goals and interests.
@@ -83,14 +83,36 @@ public class LangChain4jFormatTests {
         System.err.println(p1);
     }
 
+    @Test
+    public void testFormatEnum() {
+        Sentiment sentiment = testFormatService.chat2("""
+                I am very happy today.
+                """);
+        System.err.println(sentiment);
+        boolean positive = testFormatService.chat3("""
+                This is a terrible experience.
+                """);
+        System.err.println(positive);
+    }
+
     @Description("A person")
     public record Person(@Description("The name of the person") String name,
-                  @Description("The age of the person") int age,
-                  @Description("The height of the person") double height,
-                  @Description("Whether the person is married") boolean married) {
+                         @Description("The age of the person") int age,
+                         @Description("The height of the person") double height,
+                         @Description("Whether the person is married") boolean married) {
     }
 
     public interface TestFormatService {
-        Person chat(String question);
+        Person chat1(String question);
+
+        @dev.langchain4j.service.UserMessage("Analyze sentiment of {{it}}")
+        Sentiment chat2(String question);
+
+        @dev.langchain4j.service.UserMessage("Does {{it}} have a positive sentiment?")
+        boolean chat3(String question);
+    }
+
+    public enum Sentiment {
+        POSITIVE, NEUTRAL, NEGATIVE
     }
 }

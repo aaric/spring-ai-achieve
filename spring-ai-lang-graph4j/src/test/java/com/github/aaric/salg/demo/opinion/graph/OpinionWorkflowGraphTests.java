@@ -1,6 +1,6 @@
-package com.github.aaric.salg.opinion.graph;
+package com.github.aaric.salg.demo.opinion.graph;
 
-import com.github.aaric.salg.opinion.graph.OpinionWorkflowGraph;
+import com.github.aaric.salg.demo.opinion.graph.OpinionWorkflowGraph;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

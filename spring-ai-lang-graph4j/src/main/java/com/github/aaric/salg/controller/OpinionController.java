@@ -1,6 +1,6 @@
 package com.github.aaric.salg.controller;
 
-import com.github.aaric.salg.opinion.graph.OpinionWorkflowGraph;
+import com.github.aaric.salg.demo.opinion.graph.OpinionWorkflowGraph;
 import com.github.aaric.salg.util.RequestIdUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

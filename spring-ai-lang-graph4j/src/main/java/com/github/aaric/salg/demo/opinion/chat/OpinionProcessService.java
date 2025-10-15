@@ -1,4 +1,4 @@
-package com.github.aaric.salg.opinion.chat;
+package com.github.aaric.salg.demo.opinion.chat;
 
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;

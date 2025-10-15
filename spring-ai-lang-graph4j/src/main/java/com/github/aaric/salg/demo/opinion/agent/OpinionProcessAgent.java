@@ -1,7 +1,7 @@
-package com.github.aaric.salg.opinion.agent;
+package com.github.aaric.salg.demo.opinion.agent;
 
-import com.github.aaric.salg.opinion.chat.OpinionProcessService;
-import com.github.aaric.salg.opinion.state.OpinionAgentState;
+import com.github.aaric.salg.demo.opinion.chat.OpinionProcessService;
+import com.github.aaric.salg.demo.opinion.state.OpinionAgentState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bsc.langgraph4j.action.NodeAction;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static com.github.aaric.salg.opinion.state.OpinionAgentState.step;
+import static com.github.aaric.salg.demo.opinion.state.OpinionAgentState.step;
 
 /**
  * OpinionProcessAgent

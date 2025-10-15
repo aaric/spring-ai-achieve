@@ -1,8 +1,8 @@
-package com.github.aaric.salg.opinion.config;
+package com.github.aaric.salg.demo.opinion.config;
 
-import com.github.aaric.salg.opinion.chat.OpinionJudgeService;
-import com.github.aaric.salg.opinion.chat.OpinionProcessService;
-import com.github.aaric.salg.opinion.tool.WeatherTool;
+import com.github.aaric.salg.demo.opinion.chat.OpinionJudgeService;
+import com.github.aaric.salg.demo.opinion.chat.OpinionProcessService;
+import com.github.aaric.salg.demo.opinion.tool.WeatherTool;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;

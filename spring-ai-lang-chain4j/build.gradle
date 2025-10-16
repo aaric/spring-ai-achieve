@@ -11,6 +11,7 @@ dependencies {
 //    implementation "dev.langchain4j:langchain4j-easy-rag"
 //    implementation "dev.langchain4j:langchain4j-mcp"
     implementation "dev.langchain4j:langchain4j-reactor"
+    implementation "dev.langchain4j:langchain4j-document-parser-apache-pdfbox:1.7.1-beta14"
 
     implementation "cn.hutool:hutool-all"
 }
